@@ -1,0 +1,199 @@
+{
+  "name": "neutral-camera-v1",
+  "version": 1,
+  "layout": {
+    "artboard": {
+      "w": 640,
+      "h": 860
+    },
+    "slotLine": {
+      "x1": 185,
+      "x2": 455,
+      "y": 432
+    },
+    "photoStart": {
+      "x": 195,
+      "y": 150
+    },
+    "photoReady": {
+      "x": 195,
+      "y": 436
+    },
+    "flashCenter": {
+      "x": 194,
+      "y": 174
+    },
+    "shutterCenter": {
+      "x": 460,
+      "y": 336,
+      "r": 26
+    },
+    "lensCenter": {
+      "x": 320,
+      "y": 262,
+      "r": 90
+    },
+    "lensGlass": {
+      "x": 320,
+      "y": 262,
+      "r": 48
+    },
+    "screenRect": {
+      "x": 228,
+      "y": 216,
+      "w": 184,
+      "h": 132,
+      "radius": 12
+    },
+    "film": {
+      "card": {
+        "w": 250,
+        "h": 282
+      },
+      "photoWindow": {
+        "x": 14,
+        "y": 14,
+        "w": 222,
+        "h": 222
+      },
+      "captionArea": {
+        "x": 14,
+        "y": 240,
+        "w": 222,
+        "h": 34
+      },
+      "captionFont": "Kalam, cursive",
+      "shadow": {
+        "x": -28,
+        "y": -28,
+        "w": 306,
+        "h": 338
+      },
+      "developTexture": {
+        "file": "film/film-develop-texture.png",
+        "tile": 256
+      }
+    }
+  },
+  "stage": {
+    "w": 640,
+    "h": 760
+  },
+  "layers": {
+    "shared/body-shadow": {
+      "x": 78,
+      "y": 78,
+      "w": 492,
+      "h": 452
+    },
+    "shared/body-shell": {
+      "x": 108,
+      "y": 94,
+      "w": 424,
+      "h": 388
+    },
+    "shared/slot-cavity": {
+      "x": 181,
+      "y": 424,
+      "w": 278,
+      "h": 24
+    },
+    "shared/slot-lip": {
+      "x": 181,
+      "y": 424,
+      "w": 278,
+      "h": 31
+    },
+    "shared/flash-housing": {
+      "x": 153,
+      "y": 146,
+      "w": 85,
+      "h": 62
+    },
+    "shared/flash-lamp-off": {
+      "x": 167,
+      "y": 157,
+      "w": 54,
+      "h": 34
+    },
+    "shared/flash-lamp-on": {
+      "x": 167,
+      "y": 157,
+      "w": 54,
+      "h": 34
+    },
+    "shared/flash-glow": {
+      "x": 0,
+      "y": 0,
+      "w": 486,
+      "h": 408
+    },
+    "shared/shutter-normal": {
+      "x": 425,
+      "y": 303,
+      "w": 76,
+      "h": 76
+    },
+    "shared/shutter-pressed": {
+      "x": 430,
+      "y": 306,
+      "w": 62,
+      "h": 62
+    },
+    "instant-photo/front-panel": {
+      "x": 124,
+      "y": 118,
+      "w": 394,
+      "h": 274
+    },
+    "instant-photo/lens": {
+      "x": 217,
+      "y": 162,
+      "w": 212,
+      "h": 212
+    },
+    "instant-photo/lens-glint": {
+      "x": 271,
+      "y": 213,
+      "w": 98,
+      "h": 98
+    },
+    "instant-camera/front-panel": {
+      "x": 124,
+      "y": 118,
+      "w": 394,
+      "h": 274
+    },
+    "instant-camera/screen-off": {
+      "x": 224,
+      "y": 212,
+      "w": 192,
+      "h": 140
+    },
+    "instant-camera/screen-glass": {
+      "x": 226,
+      "y": 214,
+      "w": 188,
+      "h": 136
+    },
+    "instant-camera/screen-frame": {
+      "x": 208,
+      "y": 198,
+      "w": 228,
+      "h": 176
+    }
+  },
+  "files": {
+    "pattern": "{name}@{scale}x.webp",
+    "scales": [
+      2,
+      3
+    ]
+  },
+  "film": {
+    "paper": "film/film-paper",
+    "shadow": "film/film-shadow",
+    "gloss": "film/film-gloss",
+    "developTexture": "film/film-develop-texture.webp"
+  }
+}

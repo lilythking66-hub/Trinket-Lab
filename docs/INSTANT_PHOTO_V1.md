@@ -141,3 +141,28 @@ Not required for V1:
 - collection/album state
 - backend campaign rules
 - advanced filters or editing tools
+
+## V1 status
+
+Implemented. Each acceptance item is checked by `demos/instant-photo-family/tests/acceptance.cjs` (Playwright, desktop + iPhone 13 emulation, fake camera):
+
+| # | Criterion | How it is verified |
+|---|---|---|
+| 1 | Prepared image without QR | `print(url)` and `print(Blob)` from code |
+| 2 | Visible sequence | event order `shutter>flash>ejecting>developing>ready` + screenshots |
+| 3 | Photo starts behind the slot mask | engine clips the card above `slotLine`; `slot-lip` sits over it (screenshots) |
+| 4 | Progressive development | 3.6 s blur/saturation/exposure curve + grain fade |
+| 5 | Take / dismiss, back to idle | tap and drag both end in `taken>idle`, with output delivered via the `taken` event |
+| 6 | No overlapping prints | `print()` while busy returns `false`; 10 rapid shutter presses leave exactly one card |
+| 7 | Camera uses the same flow | same `PhotoEngine` class and same state order for a captured frame |
+| 8 | Permission failure fallback | `denied` screen with Retry / Choose photo; Instant Photo still prints |
+| 9 | Replaceable skin | a recolored skin loaded via `skin="…"` with no code change |
+| 10 | QR removable | demo with `triggers/qr` returning 404 still prints |
+
+Additional lifecycle coverage verifies opt-in selfie loading, removal during lazy camera-module loading, full camera/WebGL teardown and cleanup when a media stream opens but never delivers a frame.
+
+Known limits:
+
+- On phones, the camera needs HTTPS. See `demos/instant-photo-family/README.md`.
+- Sound is synthesized, and only plays after a user gesture (browser rule).
+- Real-device testing on iOS Safari and Android Chrome is still worth a pass, especially camera permission prompts and haptics. Haptics are Android only.

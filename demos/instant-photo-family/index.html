@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#ece8e2">
+  <title>Instant Photo Family</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kalam&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="../../components/instant-photo/instant-photo.js"></script>
+  <script type="module" src="../../components/instant-camera/instant-camera.js"></script>
+</head>
+<body>
+  <header class="top">
+    <p class="eyebrow">Trinket Lab · Instant Photo Family</p>
+    <h1>Instant Camera Playground</h1>
+    <nav class="seg" role="tablist" aria-label="Choose a camera">
+      <button role="tab" id="tab-photo" aria-selected="true" data-show="photo">Instant Photo</button>
+      <button role="tab" id="tab-camera" aria-selected="false" data-show="camera">Instant Camera</button>
+    </nav>
+  </header>
+
+  <main class="stage" data-show="photo">
+    <section class="cam" id="cam-photo" aria-labelledby="tab-photo">
+      <div class="cam-head">
+        <h2>Instant Photo <span>prepared content + optional selfie</span></h2>
+        <span class="state" data-for="photo">idle</span>
+      </div>
+      <instant-photo id="photo" selfie caption="Good day :)" date="auto"></instant-photo>
+      <div class="controls">
+        <p class="hint" id="hint-photo">Tap the lens to open the selfie preview, then press the shutter.</p>
+        <div class="row">
+          <button class="btn" id="selfie-toggle">Open selfie</button>
+          <label class="tog chip"><input type="checkbox" id="opt-fisheye" checked> Fisheye</label>
+          <input class="caption" id="caption-photo" value="Good day :)" maxlength="24" aria-label="Photo caption">
+        </div>
+        <p class="hint sub">Or print prepared content directly.</p>
+        <div class="samples" id="samples"></div>
+        <div class="row">
+          <label class="file">Upload image<input type="file" accept="image/*" id="upload"></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="cam" id="cam-camera" aria-labelledby="tab-camera">
+      <div class="cam-head">
+        <h2>Instant Camera <span>live viewfinder</span></h2>
+        <span class="state" data-for="camera">idle</span>
+      </div>
+      <instant-camera id="camera" caption="Hello!" date="auto"></instant-camera>
+      <div class="controls">
+        <p class="hint">The screen is a live viewfinder. The back camera is preferred by default.</p>
+        <div class="row">
+          <button class="btn" id="cam-toggle">Open camera</button>
+          <button class="btn ghost" id="cam-switch">Switch camera</button>
+          <input class="caption" id="caption-camera" value="Hello!" maxlength="24" aria-label="Photo caption">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="tray-wrap" aria-label="Taken photos">
+    <div class="tray-head">
+      <h3>Taken photos</h3>
+      <span class="muted" id="tray-hint">Drag the print out, or tap it to take it</span>
+    </div>
+    <div class="tray" id="tray"></div>
+  </section>
+
+  <footer class="opts">
+    <label class="tog"><input type="checkbox" id="opt-sound"> Sound</label>
+    <label class="tog"><input type="checkbox" id="opt-fast"> Fast develop</label>
+    <span class="qr" id="qr-links">QR / URL trigger samples:
+      <a href="?spot=lake">?spot=lake</a>
+      <a href="?spot=sunset">?spot=sunset</a>
+      <a href="?spot=night">?spot=night</a>
+    </span>
+  </footer>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>

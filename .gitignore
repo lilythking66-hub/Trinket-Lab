@@ -6,3 +6,13 @@ dist/
 .env
 .env.*
 !.env.example
+
+# acceptance-test output
+demos/instant-photo-family/tests/shots/
+
+# local visual exploration / generated draft exports
+skins/_drafts/
+
+# generated raster skin sources; rebuild with skins/neutral-camera-v1/_source/build.py
+skins/neutral-camera-v1/**/*.png
+skins/neutral-camera-v1/_source/.cache/
