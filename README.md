@@ -49,6 +49,14 @@ Adds live camera/selfie capture, then feeds the captured frame into the same pho
 
 An optional QR adapter. It can resolve a code into a photo recipe and call Instant Photo, but **Instant Photo does not know or care whether QR exists**.
 
+## Neutral Skin V1
+
+The first visual master is a neutral, minimal 2.5D instant camera with two interchangeable front panels: one for external-photo output and one for camera/selfie capture. The skin is a reference implementation, not part of the functional contract.
+
+![Neutral Camera V1 reference](docs/reference/neutral-camera-v1-reference.jpg)
+
+See [Instant Photo V1](docs/INSTANT_PHOTO_V1.md) for behavior and acceptance criteria, and [Skin Contract](docs/SKIN_CONTRACT.md) for the asset boundary.
+
 ## Repository shape
 
 ~~~text
