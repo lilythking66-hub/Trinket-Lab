@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -13,6 +13,7 @@ The goal is not to build one giant UI framework. Each trinket should stay small,
 - 📸 [**Instant Photo / Instant Camera →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
 - 🖨️ [**Printer →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/) — try the same feed engine with a postcard, note, and long receipt.
 - 📚 [**Bookshelf →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/) — take out, reorder, open, read, and return books.
+- 🎰 [**Gacha →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/) — turn the knob, take the capsule, pull it apart; swap the prizes freely.
 
 The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
@@ -84,7 +85,8 @@ Trinket-Lab/
 │   ├── instant-photo/
 │   ├── instant-camera/
 │   ├── printer/
-│   └── bookshelf/
+│   ├── bookshelf/
+│   └── gacha/
 ├── skins/
 │   ├── neutral-camera-v1/
 │   └── porcelain-printer-v1/
@@ -92,7 +94,8 @@ Trinket-Lab/
 │   └── qr/
 ├── demos/
 │   ├── instant-photo-family/
-│   └── printer/
+│   ├── printer/
+│   └── gacha/
 └── docs/
     └── ARCHITECTURE.md
 ~~~
@@ -101,7 +104,7 @@ This is intentionally a lightweight foundation rather than a full monorepo setup
 
 ## Future trinkets
 
-Likely future residents include gacha machines, gift boxes, radios, photo booths, and other interactive props.
+Likely future residents include gift boxes, radios, photo booths, and other interactive props.
 
 ## Quick start
 
@@ -170,6 +173,23 @@ npm run dev
 ```
 
 Run `npm run build`, `npm test`, and `npm run test:e2e` for validation. See the package [architecture](components/bookshelf/docs/ARCHITECTURE.md) and [acceptance notes](components/bookshelf/docs/ACCEPTANCE.md).
+
+## Gacha
+
+[Gacha](components/gacha/README.md) is a build-free `<trinket-gacha>` Web Component: optional coin, a ratcheted knob with detents, a physics capsule pile inside the globe, a capsule that rolls into the tray, and a pull-apart reveal. The machine is a procedural vector skin themed purely with CSS custom properties (classic red, butter, mint, navy or any accent colour).
+
+[![Gacha demo](docs/demo-images/gacha-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/)
+
+Prizes are host content — `<template data-prize>` children or a `prizes` array with colour, thumb, weight, stock and arbitrary HTML/DOM. A `resolvePrize` hook lets a server decide results.
+
+~~~html
+<script type="module" src="components/gacha/gacha-element.js"></script>
+<trinket-gacha theme="mint">
+  <template data-prize="plant" data-color="#62c0a0" data-thumb="🪴"><p>A desk plant</p></template>
+</trinket-gacha>
+~~~
+
+### ▶ [Open the live Gacha demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/)
 
 ## License
 

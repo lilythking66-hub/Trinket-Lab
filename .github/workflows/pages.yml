@@ -44,8 +44,8 @@ jobs:
         run: |
           mkdir -p _site/components _site/demos _site/demos/bookshelf _site/triggers _site/skins
           cp index.html _site/
-          cp -R components/camera-kit components/instant-camera components/instant-photo components/photo-engine components/printer _site/components/
-          cp -R demos/instant-photo-family demos/printer _site/demos/
+          cp -R components/camera-kit components/instant-camera components/instant-photo components/photo-engine components/printer components/gacha _site/components/
+          cp -R demos/instant-photo-family demos/printer demos/gacha _site/demos/
           cp -R components/bookshelf/dist/. _site/demos/bookshelf/
           cp -R triggers/qr _site/triggers/
           for skin in skins/*; do

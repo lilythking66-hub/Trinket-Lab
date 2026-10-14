@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4f0e8">
+  <title>Gacha · Trinket Lab</title>
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="../../components/gacha/gacha-element.js"></script>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Trinket Lab · Gacha</p>
+    <h1>Turn the knob, take the capsule.</h1>
+    <p class="dek">A tabletop capsule machine with a ratcheted knob, a real capsule pile, and prizes the host fully controls. Change the theme or the prize set; the machine stays the same.</p>
+  </header>
+
+  <main>
+    <section class="machine">
+      <trinket-gacha id="gacha" price="100" capsules="24">
+        <!-- Declarative prizes: each template is one prize. Content is host HTML. -->
+        <template data-prize="film" data-color="#e2574c" data-thumb="🎞️" data-weight="3">
+          <article class="prize-object">
+            <span class="object-art">🎞️</span>
+            <p class="object-kicker">NO. 01 · COMMON</p>
+            <h2>A roll of film</h2>
+            <p>Twenty-four frames of things you haven't noticed yet.</p>
+          </article>
+        </template>
+        <template data-prize="plant" data-color="#62c0a0" data-thumb="🪴" data-weight="3">
+          <article class="prize-object">
+            <span class="object-art">🪴</span>
+            <p class="object-kicker">NO. 02 · COMMON</p>
+            <h2>A desk plant</h2>
+            <p>Needs very little. Gives back a lot of green.</p>
+          </article>
+        </template>
+        <template data-prize="cup" data-color="#f2c14e" data-thumb="☕" data-weight="3">
+          <article class="prize-object">
+            <span class="object-art">☕</span>
+            <p class="object-kicker">NO. 03 · COMMON</p>
+            <h2>A warm cup</h2>
+            <p>Best held with both hands on a slow morning.</p>
+          </article>
+        </template>
+        <template data-prize="cassette" data-color="#4f86c6" data-thumb="📼" data-weight="2">
+          <article class="prize-object">
+            <span class="object-art">📼</span>
+            <p class="object-kicker">NO. 04 · UNCOMMON</p>
+            <h2>A mixtape</h2>
+            <p>Side A is for walking. Side B is for staying in.</p>
+          </article>
+        </template>
+        <template data-prize="key" data-color="#f19bb2" data-thumb="🗝️" data-weight="1">
+          <article class="prize-object rare">
+            <span class="object-art">🗝️</span>
+            <p class="object-kicker">NO. 05 · RARE</p>
+            <h2>A tiny key</h2>
+            <p>Nobody knows what it opens. That's the fun part.</p>
+          </article>
+        </template>
+      </trinket-gacha>
+    </section>
+
+    <aside class="panel">
+      <div class="state-line"><span class="dot"></span><span id="state">idle</span><span id="stock" class="stock"></span></div>
+
+      <p class="label">PRIZES</p>
+      <div class="choices" role="group" aria-label="Prize set" id="sets">
+        <button class="choice active" data-set="objects">Tiny objects</button>
+        <button class="choice" data-set="notes">Fortune notes</button>
+        <button class="choice" data-set="limited">Limited run</button>
+      </div>
+      <p class="set-note" id="set-note"></p>
+
+      <p class="label">THEME</p>
+      <div class="swatches" role="group" aria-label="Theme" id="themes">
+        <button class="swatch active" data-theme="" style="--c:#d6473c" aria-label="Classic red"></button>
+        <button class="swatch" data-theme="butter" style="--c:#e6b545" aria-label="Butter yellow"></button>
+        <button class="swatch" data-theme="mint" style="--c:#4caa8b" aria-label="Mint green"></button>
+        <button class="swatch" data-theme="navy" style="--c:#2d4f87" aria-label="Deep navy"></button>
+      </div>
+
+      <p class="label">COIN</p>
+      <label class="toggle"><input type="checkbox" id="require-coin"> Require a coin</label>
+      <button class="secondary-btn" id="coin" disabled>Insert coin</button>
+
+      <button class="primary" id="turn">Turn for me</button>
+      <div class="secondary">
+        <button id="reset">Reset</button>
+        <button id="refill">Refill</button>
+        <button id="mute" aria-pressed="false">Mute</button>
+      </div>
+
+      <p class="label">LAST PRIZES</p>
+      <ol class="history" id="history"><li class="empty">Nothing yet.</li></ol>
+      <p class="footnote">Drag the knob clockwise (or tap it). Capsules land in the tray; take one out and pull the halves apart.</p>
+    </aside>
+  </main>
+
+  <footer>
+    <a href="../../">Trinket Lab</a>
+    <span>Gacha V1</span>
+  </footer>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>

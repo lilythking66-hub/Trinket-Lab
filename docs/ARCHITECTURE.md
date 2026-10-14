@@ -109,3 +109,7 @@ Do not introduce workspace/package publishing infrastructure until there are mul
 `components/bookshelf/` is an independent TypeScript package with its own dependency lockfile, Vite demo and tests. `src/core/` owns book data, layout, state and persistence; rendering and pointer input are adapters; `ReaderRenderer` allows replacing SimplePageReader without changing the shelf core. Demo-specific composition and content live in `src/demo/`. See its [architecture](../components/bookshelf/docs/ARCHITECTURE.md).
 
 The existing photo and printer components retain their build-free workflow. Bookshelf is built from its own directory during GitHub Pages deployment and copied into `demos/bookshelf/`; no shared workspace or committed `dist/` is required.
+
+## 7. Gacha
+
+`components/gacha/` follows the printer's build-free shape. `gacha-core.js` owns the state machine (locked → idle → turning → dispensing → waiting → presenting → revealed), the weighted draw, stock and the knob ratchet; `capsule-physics.js` owns the capsule pile. Neither touches the DOM. `gacha-element.js` renders the procedural skin from `machine-art.js` and wires pointer/keyboard input. Prize content, draw rules decided by a server (`resolvePrize`), payments (`insertCoin()` with `coin-input="none"`) and collections stay in the host product.
