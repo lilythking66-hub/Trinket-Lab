@@ -71,7 +71,8 @@ def camera(variant, flash=False, pressed=False, photo_y=None, develop=1.0, img=N
     return im
 
 if __name__ == "__main__":
-    out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(SKIN, "preview.jpg")
+    os.makedirs(os.path.join(HERE, ".cache"), exist_ok=True)
+    out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, ".cache", "preview.jpg")
     a = camera("photo")
     b = camera("camera", preview=cat)
     c = camera("photo", photo_y=R.SLOT_LINE + 4, develop=1.0, img=sample)

@@ -6,11 +6,7 @@
 
 A skin may change materials, colors, decorations, proportions within supported bounds, and panel artwork. It must not contain product logic, QR logic, camera permission logic, collection rules, or animation state management.
 
-The first reference skin is **Neutral Camera V1**, a simple cream 2.5D camera designed as the repository master.
-
-Reference (visual master — design intent, not a cut source):
-
-![Neutral Camera V1](reference/neutral-camera-v1-reference.jpg)
+The repository includes a reference runtime skin so the component can be used and tested out of the box. This document defines the public asset contract only; internal master boards and art-direction sheets are not part of the repository contract.
 
 ---
 
@@ -18,15 +14,10 @@ Reference (visual master — design intent, not a cut source):
 
 All layers of one skin are drawn from **one single view**. Layers from different views cannot be stacked.
 
-- **Use the Eject Flow view** from the reference: near-front, slight top-down, the top face visible as a thin band, side faces visible only as rounded edges.
-- The photo ejects **straight down** out of the slot, with no tilt baked in. Any tilt during ready/taken is applied by the engine as a transform.
-- The 3/4 hero renders in the reference are marketing views only. Do not cut layers from them.
-
-### Resolving inconsistencies in the reference
-
-- **Top face:** follow the hero render — cream top with **two small charcoal buttons**. The pink pill / square shown in the "Top" three-view is not used.
-- **Shutter:** the round warm-accent button on the **front face, lower right**, same position in both variants.
-- **Back / film door:** not cut for V1. Camera-back interaction is out of scope.
+- Every layer in a skin must use the same artboard, camera angle, and coordinate system.
+- The photo ejects **straight down** out of the slot, with no tilt baked into the artwork. Any tilt during ready/taken is applied by the engine as a transform.
+- Decorative shapes, materials, colors, and control placement belong to the skin implementation, not to this contract.
+- Back-side interaction is out of scope for V1.
 
 ---
 
@@ -70,7 +61,7 @@ Used by Photo Engine. Same skin folder.
 | `film-gloss` | Optional. Transparent sheen over the window. |
 | `film-develop-texture` | Optional. Grain/noise tile the engine can fade out during developing. |
 
-Proportions follow the reference: near-square image window; bottom border ≈ 3× the side border (caption area).
+Film proportions are defined by the skin's runtime geometry/layout data rather than by static presentation artwork.
 
 Not drawn as art:
 
@@ -246,16 +237,8 @@ A new camera skin is acceptable when:
 
 ---
 
-## 10. Neutral Camera V1 visual direction
+## 10. Visual direction boundary
 
-The repository master stays deliberately neutral:
+Visual direction is deliberately outside the public contract. A skin may use any coherent art direction as long as it satisfies the geometry, layer, state, and interaction requirements above.
 
-- warm cream / off-white body
-- soft charcoal details
-- restrained warm accent shutter
-- rounded, friendly industrial shape
-- minimal decoration
-- soft, believable 2.5D depth
-- no project-specific branding or regional motifs
-
-Product skins such as Shuanglang, wedding, gift-box, retro, or character-themed versions inherit this contract rather than modify the engine.
+Product skins inherit this contract rather than modify the engine.

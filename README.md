@@ -8,7 +8,12 @@ Trinket Lab is a home for small digital objects that feel like things: cameras t
 
 The goal is not to build one giant UI framework. Each trinket should stay small, understandable, skinnable, and reusable across different products.
 
-[![Neutral Camera V1 preview](skins/neutral-camera-v1/preview.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/)
+## Live demos
+
+- 📸 [**Instant Photo / Instant Camera →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
+- 🖨️ [**Printer →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/) — try the same feed engine with a postcard, note, and long receipt.
+
+The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
 ## Principles
 
@@ -58,13 +63,11 @@ Shared `getUserMedia` lifecycle and optional WebGL fisheye rendering. The Photo 
 
 An optional QR adapter. It can resolve a code into a photo recipe and call Instant Photo, but **Instant Photo does not know or care whether QR exists**.
 
-## Neutral Skin V1
+## Skins
 
-The first visual master is a neutral, minimal 2.5D instant camera with two interchangeable front panels: one for external-photo output and one for camera/selfie capture. The skin is a reference implementation, not part of the functional contract.
+The included runtime skins are sample implementations of the public asset contract. Product-specific art direction and internal master boards stay outside the public repository; the engine only depends on geometry, named layers, and states.
 
-![Neutral Camera V1 reference](docs/reference/neutral-camera-v1-reference.jpg)
-
-See [Instant Photo V1](docs/INSTANT_PHOTO_V1.md) for behavior and acceptance criteria, and [Skin Contract](docs/SKIN_CONTRACT.md) for the asset boundary.
+See [Instant Photo V1](docs/INSTANT_PHOTO_V1.md) for behavior and acceptance criteria, and [Skin Contract](docs/SKIN_CONTRACT.md) for the public asset boundary.
 
 ## Repository shape
 
@@ -137,4 +140,6 @@ Product-specific copy belongs in the host app, not in the shared engine.
 
 [Printer](components/printer/README.md) is the second build-free Trinket family: a platform-neutral rigid-sheet feed core plus the `<trinket-printer>` Web Component and a replaceable porcelain skin. Paper content stays in the host through a slot, so postcards, notes, receipts or product-specific layouts all reuse the same feed mechanics.
 
-[Try the live Printer demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/), which deliberately feeds three different paper sizes through the same machine.
+### ▶ [Open the live Printer demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/)
+
+The public demo deliberately feeds a postcard, a note, and a long receipt through the same machine so the reusable motion is visible without exposing internal design boards.
