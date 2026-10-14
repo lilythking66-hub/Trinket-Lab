@@ -29,13 +29,12 @@ test("responsive shelf, pull out, reader and persisted progress", async ({
   ).toBe(true);
   await visualShot(page, info, "shelf", true);
   await page.locator('[data-book="book-1"]').click();
-  await expect(page.locator(".detail-panel")).toHaveClass(/is-selected/);
   await expect(page.locator(".book-foreground")).toHaveAttribute(
     "data-phase",
     "cover",
   );
   await visualShot(page, info, "selected");
-  await page.locator(".read-button").click();
+  await page.locator(".foreground-cover").click();
   await expect(page.locator(".reader")).toBeVisible();
   await expect(page.locator(".page-count")).toHaveText("01 / 03");
   await page.locator(".page-next").click();
@@ -54,9 +53,12 @@ test("responsive shelf, pull out, reader and persisted progress", async ({
   );
   await page.reload();
   await expect(page.locator(".loading")).toHaveCount(0);
+  await expect(page.locator('[data-book="book-1"]')).toHaveAttribute(
+    "aria-label",
+    /50% read/,
+  );
   await page.locator('[data-book="book-1"]').click();
-  await expect(page.locator(".book-progress")).toContainText("50%");
-  await page.locator(".read-button").click();
+  await page.locator(".foreground-cover").click();
   await expect(page.locator(".page-count")).toHaveText("02 / 03");
   expect(errors).toEqual([]);
 });
@@ -91,7 +93,7 @@ test("pointer reorder saves and Escape rolls back", async ({ page }, info) => {
       page.evaluate(
         () =>
           JSON.parse(
-            localStorage.getItem("bookshelf-lab:v1") || "{}",
+            localStorage.getItem("trinket-bookshelf:v1") || "{}",
           ).books?.find((b: any) => b.id === "book-3")?.order,
       ),
     )
@@ -121,11 +123,11 @@ test("keyboard cross-shelf reorder, resize and search", async ({ page }) => {
       page.evaluate(
         () =>
           JSON.parse(
-            localStorage.getItem("bookshelf-lab:v1") || "{}",
+            localStorage.getItem("trinket-bookshelf:v1") || "{}",
           ).books?.find((b: any) => b.id === "book-1")?.shelfId,
       ),
     )
-    .toBe("life");
+    .toBe("everyday");
   await page.setViewportSize({ width: 390, height: 844 });
   await page.waitForTimeout(400);
   expect(
@@ -136,7 +138,7 @@ test("keyboard cross-shelf reorder, resize and search", async ({ page }) => {
   await page.setViewportSize({ width: 1680, height: 1000 });
   await page.waitForTimeout(400);
   await expect(page.locator(".book-target:visible")).toHaveCount(24);
-  await page.getByRole("searchbox").fill("山间");
+  await page.getByRole("searchbox").fill("Mountain");
   await expect(page.locator(".book-target:visible")).toHaveCount(1);
   await page.getByRole("searchbox").fill("does-not-exist");
   await expect(page.locator(".empty")).toBeVisible();
@@ -156,11 +158,11 @@ test("cross-row pointer drag commits the logical shelf", async ({
         page.evaluate(
           () =>
             JSON.parse(
-              localStorage.getItem("bookshelf-lab:v1") || "{}",
+              localStorage.getItem("trinket-bookshelf:v1") || "{}",
             ).books?.find((b: any) => b.id === "book-3")?.shelfId,
         ),
       )
-      .toBe("life");
+      .toBe("everyday");
   } else {
     const a = (await page.locator('[data-book="book-3"]').boundingBox())!;
     const b = (await page.locator('[data-book="book-9"]').boundingBox())!;
@@ -189,7 +191,7 @@ test("cross-row pointer drag commits the logical shelf", async ({
         page.evaluate(
           () =>
             JSON.parse(
-              localStorage.getItem("bookshelf-lab:v1") || "{}",
+              localStorage.getItem("trinket-bookshelf:v1") || "{}",
             ).books?.find((b: any) => b.id === "book-3")?.order,
         ),
       )
@@ -218,13 +220,12 @@ test("touch scroll is distinct from long press and reader swipe", async ({
     touchPoints: [],
   });
   await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(0);
-  await expect(page.locator(".detail-panel")).not.toHaveClass(/is-selected/);
   expect(
-    await page.evaluate(() => localStorage.getItem("bookshelf-lab:v1")),
+    await page.evaluate(() => localStorage.getItem("trinket-bookshelf:v1")),
   ).toBeNull();
   await page.evaluate(() => scrollTo(0, 0));
   await page.locator('[data-book="book-1"]').tap();
-  await page.locator(".read-button").tap();
+  await page.locator(".foreground-cover").tap();
   await expect(page.locator(".reader")).toBeVisible();
   const body = (await page.locator(".reader-body").boundingBox())!;
   const x = body.x + body.width * 0.8,

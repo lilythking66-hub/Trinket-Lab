@@ -1,7 +1,7 @@
 import { defineTheme } from "./Theme";
 export { neutralTheme } from "./Theme";
 
-/** Warm oak study: the original Bookshelf Lab look, kept as an example product skin. */
+/** Warm oak study: an optional example skin. */
 export const oakTheme = defineTheme({
   shelf: {
     top: 0xd8c8a9,
@@ -18,7 +18,7 @@ export const oakTheme = defineTheme({
     inkOnLight: "#333b34",
     inkOnDark: "#f3edda",
     bandColor: "#f9efd15c",
-    mark: "B · L",
+    mark: null,
   },
   surface: {
     veil: "rgba(245, 243, 237, 0.84)",

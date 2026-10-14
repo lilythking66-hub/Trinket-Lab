@@ -18,7 +18,7 @@ const engine = new BookshelfEngine(
   shelves
     .slice(0, 2)
     .map((s, i) => ({ ...s, title: ["Fiction", "Everyday"][i] })),
-  new LocalPersistence("bookshelf-lab:embed:v1"),
+  new LocalPersistence("trinket-bookshelf:embed:v1"),
 );
 const view = new BookshelfView(
   document.querySelector<HTMLElement>("#shelf")!,

@@ -17,15 +17,15 @@ test("empty book opens from its cover, returns, and a readable book still pages"
   await choose(".foreground-cover");
   await expect(page.locator(".reader")).toBeVisible();
   await expect(page.locator(".reader-body")).toContainText(
-    "这本书尚未收录正文",
+    "This book has no pages yet.",
   );
-  await expect(page.locator(".page-count")).toHaveText("暂无正文");
+  await expect(page.locator(".page-count")).toHaveText("No pages");
   await expect(page.locator(".page-prev")).toBeDisabled();
   await expect(page.locator(".page-next")).toBeDisabled();
   await page.keyboard.press("ArrowRight");
   await page.keyboard.press("ArrowLeft");
   expect(
-    await page.evaluate(() => localStorage.getItem("bookshelf-lab:v1")),
+    await page.evaluate(() => localStorage.getItem("trinket-bookshelf:v1")),
   ).toBeNull();
   await choose(".reader-close");
   await expect(page.locator(".book-foreground")).toHaveAttribute(
@@ -48,10 +48,12 @@ test("empty book opens from its cover, returns, and a readable book still pages"
     "idle",
   );
   await choose('[data-book="book-4"]');
-  await expect(page.locator(".read-button")).toBeEnabled();
-  await expect(page.locator(".read-button")).toHaveText("打开书籍 ↗");
-  await choose(".read-button");
+  await expect(page.locator(".book-foreground")).toHaveAttribute(
+    "data-phase",
+    "cover",
+  );
+  await choose(".foreground-cover");
   await expect(page.locator(".reader-body")).toContainText(
-    "这本书尚未收录正文",
+    "This book has no pages yet.",
   );
 });

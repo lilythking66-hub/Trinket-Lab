@@ -115,7 +115,7 @@ describe("spines and engine", () => {
       color: "#999999",
       width: 30,
       height: 220,
-      shelfId: "life",
+      shelfId: "everyday",
       order: 9999,
       pages: [],
       progress: 0,
@@ -123,14 +123,14 @@ describe("spines and engine", () => {
       imported: true,
     });
     const shelf = e.books
-      .filter((b) => b.shelfId === "life")
+      .filter((b) => b.shelfId === "everyday")
       .sort((a, b) => a.order - b.order);
     expect(shelf[shelf.length - 1].id).toBe("user-1");
     e.updateBook("user-1", { title: "改名", color: "#123456" });
     expect(e.book("user-1")).toMatchObject({
       title: "改名",
       color: "#123456",
-      shelfId: "life",
+      shelfId: "everyday",
     });
     expect(() => e.updateBook("user-1", { width: 2 })).toThrow();
   });
@@ -142,7 +142,7 @@ describe("spines and engine", () => {
     );
     const before = e.books.map((b) => `${b.id}:${b.shelfId}:${b.order}`).join();
     e.beginDrag("book-3");
-    e.move("book-3", "thought");
+    e.move("book-3", "ideas");
     e.endDrag(true);
     expect(e.books.map((b) => `${b.id}:${b.shelfId}:${b.order}`).join()).toBe(
       before,

@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf Lab](components/bookshelf-lab/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -12,7 +12,7 @@ The goal is not to build one giant UI framework. Each trinket should stay small,
 
 - 📸 [**Instant Photo / Instant Camera →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
 - 🖨️ [**Printer →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/) — try the same feed engine with a postcard, note, and long receipt.
-- 📚 [**Bookshelf Lab →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/) — take out, reorder, open, read, and return books.
+- 📚 [**Bookshelf →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/) — take out, reorder, open, read, and return books.
 
 The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
@@ -84,7 +84,7 @@ Trinket-Lab/
 │   ├── instant-photo/
 │   ├── instant-camera/
 │   ├── printer/
-│   └── bookshelf-lab/
+│   └── bookshelf/
 ├── skins/
 │   ├── neutral-camera-v1/
 │   └── porcelain-printer-v1/
@@ -152,24 +152,24 @@ Product-specific copy belongs in the host app, not in the shared engine.
 
 The public demo deliberately feeds a postcard, a note, and a long receipt through the same machine so the reusable motion is visible without exposing internal design boards.
 
-## Bookshelf Lab
+## Bookshelf
 
-[Bookshelf Lab](components/bookshelf-lab/README.md) is a reusable TypeScript, PixiJS 8 and GSAP bookshelf and reader engine. It includes responsive shelves, drag and keyboard reordering, foreground pull-out/open/return motion, a replaceable reader, local persistence, and optional EPUB/TXT/Markdown import.
+[Bookshelf](components/bookshelf/README.md) is a reusable TypeScript, PixiJS 8 and GSAP bookshelf and reader engine. It includes responsive shelves, drag and keyboard reordering, foreground pull-out/open/return motion, a replaceable reader, local persistence, and optional EPUB/TXT/Markdown import.
 
-[![Bookshelf Lab demo](docs/demo-images/bookshelf-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/)
+[![Bookshelf demo](docs/demo-images/bookshelf-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/)
 
 ### ▶ [Open the live Bookshelf demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/)
 
-It remains a self-contained package under `components/bookshelf-lab/`; GitHub Pages builds its Vite demo during deployment rather than committing `dist/`.
+It remains a self-contained package under `components/bookshelf/`; GitHub Pages builds its Vite demo during deployment rather than committing `dist/`.
 
 ```sh
-cd components/bookshelf-lab
+cd components/bookshelf
 npm ci
 npm run dev
 # open http://localhost:5186/
 ```
 
-Run `npm run build`, `npm test`, and `npm run test:e2e` for validation. See the package [architecture](components/bookshelf-lab/docs/ARCHITECTURE.md) and [acceptance notes](components/bookshelf-lab/docs/ACCEPTANCE.md).
+Run `npm run build`, `npm test`, and `npm run test:e2e` for validation. See the package [architecture](components/bookshelf/docs/ARCHITECTURE.md) and [acceptance notes](components/bookshelf/docs/ACCEPTANCE.md).
 
 ## License
 

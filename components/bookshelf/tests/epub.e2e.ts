@@ -19,8 +19,8 @@ test("EPUB 3: metadata, cover, nested TOC and chapter jump", async ({
   await page
     .locator('dialog.add-book input[type="file"]')
     .setInputFiles(fixture("sample-epub3.epub"));
-  await expect(page.locator(".add-book-status")).toContainText("识别到 3 章");
-  await expect(page.locator(".add-book-status")).toContainText("有封面");
+  await expect(page.locator(".add-book-status")).toContainText("3 chapters detected");
+  await expect(page.locator(".add-book-status")).toContainText("cover found");
   await expect(page.locator('input[name="title"]')).toHaveValue("雾尾镇来信");
   await expect(page.locator('input[name="author"]')).toHaveValue("林间");
   await page.locator(".add-book-submit").click();
@@ -109,7 +109,7 @@ test("EPUB 2 with NCX, and DRM-protected files are refused", async ({
   await expect(page.locator(".add-book-status")).toContainText("DRM");
   await expect(page.locator(".add-book-submit")).toBeDisabled();
   await input.setInputFiles(fixture("sample-epub2.epub"));
-  await expect(page.locator(".add-book-status")).toContainText("识别到 2 章");
+  await expect(page.locator(".add-book-status")).toContainText("2 chapters detected");
   await expect(page.locator('input[name="title"]')).toHaveValue(
     "The Lighthouse Letters",
   );

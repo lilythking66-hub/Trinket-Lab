@@ -118,7 +118,7 @@ test("one foreground book: pull, turn, open spread, read, close and return", asy
     "idle",
   ]);
 });
-test("top shelf extraction crosses canvas top without clipping; interrupted return works", async ({
+test("top shelf extraction stays unclipped; interrupted return works", async ({
   page,
 }, info) => {
   const book = page.locator('[data-book="book-4"]');
@@ -127,12 +127,16 @@ test("top shelf extraction crosses canvas top without clipping; interrupted retu
     "data-phase",
     "turning",
   );
-  const stage = await page.locator("#bookshelf").boundingBox();
-  await expect
-    .poll(async () => (await page.locator(".book-actor").boundingBox())!.y)
-    .toBeLessThan(stage!.y);
   const actor = await page.locator(".book-actor").boundingBox();
   expect(actor!.y).toBeGreaterThan(0);
+  expect(actor!.x).toBeGreaterThan(0);
+  expect(actor!.x + actor!.width).toBeLessThan(page.viewportSize()!.width);
+  expect(actor!.y + actor!.height).toBeLessThan(page.viewportSize()!.height);
+  expect(
+    await page
+      .locator(".book-foreground")
+      .evaluate((element) => element.parentElement === document.body),
+  ).toBe(true);
   await visualShot(page, info, "top-extraction");
   await page.keyboard.press("Escape");
   await expect(page.locator(".book-foreground")).toHaveAttribute(

@@ -5,7 +5,7 @@ export interface StorageAdapter {
 }
 export class LocalPersistence implements StorageAdapter {
   constructor(
-    private key = "bookshelf-lab:v1",
+    private key = "trinket-bookshelf:v1",
     private storage?: Pick<Storage, "getItem" | "setItem">,
   ) {}
   load(books: Book[], shelves: Shelf[]): Book[] {

@@ -1,4 +1,4 @@
-// Demo host UI for adding, editing and removing the reader's own books.
+// Demo host UI for adding, editing and removing local books.
 // All parsing, sizing, storage and pagination come from the library (src/import, src/reader);
 // this file only owns the dialog and its copy.
 import {
@@ -40,36 +40,36 @@ export function createAddBookDialog(opts: {
   dialog.innerHTML = `
     <form method="dialog" class="add-book-form" novalidate>
       <div class="add-book-head">
-        <div><div class="eyebrow add-book-eyebrow">ADD TO YOUR SHELF</div><h2 id="add-book-title">添加一本书</h2></div>
-        <button type="button" class="add-book-close" aria-label="关闭">×</button>
+        <div><div class="eyebrow add-book-eyebrow">ADD TO YOUR SHELF</div><h2 id="add-book-title">Add a book</h2></div>
+        <button type="button" class="add-book-close" aria-label="Close">×</button>
       </div>
       <div class="add-book-tabs" role="tablist">
-        <button type="button" role="tab" data-source="keep">保留正文</button>
-        <button type="button" role="tab" data-source="file">导入文件</button>
-        <button type="button" role="tab" data-source="paste">粘贴文字</button>
-        <button type="button" role="tab" data-source="blank">空白书</button>
+        <button type="button" role="tab" data-source="keep">Keep text</button>
+        <button type="button" role="tab" data-source="file">Import file</button>
+        <button type="button" role="tab" data-source="paste">Paste text</button>
+        <button type="button" role="tab" data-source="blank">Blank book</button>
       </div>
       <div class="add-book-grid">
         <div class="add-book-main">
           <section data-panel="file">
             <label class="drop-zone">
               <input type="file" accept=".txt,.md,.markdown,.text,.epub,text/plain,text/markdown,application/epub+zip" />
-              <strong>拖入 .epub / .txt / .md 文件，或点击选择</strong>
-              <span>epub 会读取目录和封面；txt 自动识别 UTF-8 / GBK 编码和「第一章」等章节</span>
+              <strong>Drop an .epub, .txt, or .md file here, or click to choose</strong>
+              <span>EPUB imports metadata, contents, and cover art. TXT detects UTF-8 / GBK and common chapter headings.</span>
             </label>
           </section>
           <section data-panel="paste">
-            <textarea rows="7" placeholder="把文字粘贴到这里。&#10;用「第一章 …」或 Markdown 的 # / ## 标题来分章。"></textarea>
+            <textarea rows="7" placeholder="Paste text here.&#10;Use Chapter 1… or Markdown # / ## headings to split chapters."></textarea>
           </section>
-          <section data-panel="blank"><p class="add-book-note">先放一本空书占位，之后可以在「编辑」里导入正文。</p></section>
+          <section data-panel="blank"><p class="add-book-note">Add an empty placeholder book.</p></section>
           <section data-panel="keep"><p class="add-book-note keep-note"></p></section>
           <p class="add-book-status" role="status"></p>
           <div class="add-book-fields">
-            <label>书名<input name="title" required maxlength="80" autocomplete="off" /></label>
-            <label>作者<input name="author" maxlength="60" autocomplete="off" /></label>
-            <label>放在<select name="shelf"></select></label>
+            <label>Title<input name="title" required maxlength="80" autocomplete="off" /></label>
+            <label>Author<input name="author" maxlength="60" autocomplete="off" /></label>
+            <label>Shelf<select name="shelf"></select></label>
           </div>
-          <fieldset class="add-book-colors"><legend>书脊颜色</legend><div class="swatches"></div></fieldset>
+          <fieldset class="add-book-colors"><legend>Spine color</legend><div class="swatches"></div></fieldset>
         </div>
         <figure class="add-book-preview" aria-hidden="true">
           <canvas></canvas>
@@ -77,10 +77,10 @@ export function createAddBookDialog(opts: {
         </figure>
       </div>
       <div class="add-book-actions">
-        <button type="button" class="add-book-remove" hidden>从书架移除</button>
+        <button type="button" class="add-book-remove" hidden>Remove from shelf</button>
         <span class="spacer"></span>
-        <button type="button" class="add-book-cancel">取消</button>
-        <button type="submit" class="add-book-submit">放上书架</button>
+        <button type="button" class="add-book-cancel">Cancel</button>
+        <button type="submit" class="add-book-submit">Add to shelf</button>
       </div>
     </form>`;
   document.body.append(dialog);
@@ -128,7 +128,7 @@ export function createAddBookDialog(opts: {
     b.className = "swatch";
     b.style.background = c;
     b.dataset.color = c;
-    b.setAttribute("aria-label", `颜色 ${c}`);
+    b.setAttribute("aria-label", `Color ${c}`);
     b.addEventListener("click", () => {
       color = c;
       colorTouched = true;
@@ -144,28 +144,28 @@ export function createAddBookDialog(opts: {
         ? 0
         : (parsed?.length ?? 0);
   function spec() {
-    const s = generateSpine(titleIn.value.trim() || "未命名", lengthOf());
+    const s = generateSpine(titleIn.value.trim() || "Untitled", lengthOf());
     if (!colorTouched && !editing) color = cover?.color ?? s.color;
     return { ...s, color };
   }
   function describe() {
     if (source === "keep")
       return editing?.text
-        ? `${wan(editing.length ?? 0)} · ${editing.chapters?.length ?? 1} 章`
-        : "这本书目前没有正文";
-    if (source === "blank") return "空白书，没有正文";
+        ? `${measure(editing.length ?? 0)} · ${editing.chapters?.length ?? 1} chapters`
+        : "This book has no text yet";
+    if (source === "blank") return "Blank book · no text";
     if (!parsed) return "";
     const ch = parsed.chapters.filter((c) => c.title).length;
     return [
       source === "file" ? fileName : "",
-      wan(parsed.length),
-      ch ? `识别到 ${ch} 章` : "未识别到章节，将整本连续分页",
+      measure(parsed.length),
+      ch ? `${ch} chapters detected` : "No chapter headings detected · continuous pagination",
       parsed.encoding === "EPUB"
         ? cover
-          ? "EPUB · 有封面"
+          ? "EPUB · cover found"
           : "EPUB"
         : parsed.encoding !== "UTF-8"
-          ? `编码 ${parsed.encoding}`
+          ? `Encoding ${parsed.encoding}`
           : "",
     ]
       .filter(Boolean)
@@ -187,8 +187,8 @@ export function createAddBookDialog(opts: {
     for (const panel of dialog.querySelectorAll<HTMLElement>("[data-panel]"))
       panel.hidden = panel.dataset.panel !== source;
     $(".keep-note").textContent = editing?.text
-      ? "正文保持不变，只修改下面的信息。"
-      : "这本书目前是空书，可以切换到「导入文件」或「粘贴文字」补上正文。";
+      ? "Keep the current text and edit the metadata below."
+      : "This book is blank. Import a file or paste text to add content.";
     status.textContent = describe();
     const s = spec();
     swatches
@@ -198,12 +198,12 @@ export function createAddBookDialog(opts: {
       );
     drawPreview({
       id: editing?.id ?? "preview",
-      title: titleIn.value.trim() || "未命名",
+      title: titleIn.value.trim() || "Untitled",
       color: s.color,
       width: s.width,
       height: s.height,
     });
-    caption.textContent = `厚度 ${s.width} · 高 ${s.height}`;
+    caption.textContent = `Width ${s.width} · Height ${s.height}`;
     const ok =
       !!titleIn.value.trim() &&
       (source !== "file" || !!parsed) &&
@@ -267,10 +267,10 @@ export function createAddBookDialog(opts: {
     if (/\.epub$/i.test(file.name) || file.type === "application/epub+zip") {
       if (file.size > MAX_BYTES * 3) {
         parsed = undefined;
-        status.textContent = "文件超过 90MB，暂不支持。";
+        status.textContent = "Files over 90 MB are not supported.";
         return refreshButtons();
       }
-      status.textContent = "正在读取 epub…";
+      status.textContent = "Reading EPUB…";
       fileName = file.name;
       try {
         const r = await importEpub(await file.arrayBuffer(), file.name);
@@ -292,33 +292,33 @@ export function createAddBookDialog(opts: {
         const code = error instanceof EpubError ? error.code : "invalid";
         status.textContent =
           code === "drm"
-            ? "这本 epub 有版权保护（DRM），无法导入。"
+            ? "This EPUB is DRM-protected and cannot be imported."
             : code === "empty"
-              ? "这本 epub 里没有可读的文字（可能是纯图片书）。"
-              : "无法读取这个 epub，文件可能已损坏。";
+              ? "This EPUB has no readable text. It may be image-only."
+              : "Could not read this EPUB. The file may be damaged.";
         refreshButtons();
       }
       return;
     }
     if (file.size > MAX_BYTES) {
       parsed = undefined;
-      status.textContent = "文件超过 30MB，暂不支持。";
+      status.textContent = "Files over 30 MB are not supported.";
       return refreshButtons();
     }
-    status.textContent = "正在读取…";
+    status.textContent = "Reading…";
     fileName = file.name;
     try {
       parsed = importTextFile(await file.arrayBuffer(), file.name);
       if (!parsed.text.trim()) {
         parsed = undefined;
-        status.textContent = "这个文件里没有可读的文字。";
+        status.textContent = "This file has no readable text.";
         return refreshButtons();
       }
       applyGuess(parsed.title, parsed.author);
       refresh();
     } catch {
       parsed = undefined;
-      status.textContent = "读取失败，请确认是 .txt 或 .md 文本文件。";
+      status.textContent = "Could not read this file. Use plain .txt or .md text.";
       refreshButtons();
     }
   }
@@ -371,7 +371,7 @@ export function createAddBookDialog(opts: {
     if (!editing) return;
     if (!confirmRemove) {
       confirmRemove = true;
-      removeBtn.textContent = "再点一次，确认移除";
+      removeBtn.textContent = "Click again to confirm";
       removeBtn.classList.add("is-armed");
       return;
     }
@@ -483,7 +483,7 @@ export function createAddBookDialog(opts: {
       }
     } catch (error) {
       console.error(error);
-      status.textContent = "保存失败：浏览器可能禁止了本地存储。";
+      status.textContent = "Could not save. Local browser storage may be unavailable.";
       submit.disabled = false;
     }
   });
@@ -508,13 +508,13 @@ export function createAddBookDialog(opts: {
     authorIn.value = book?.author ?? "";
     color = book?.color ?? spinePalette[0];
     removeBtn.hidden = !book;
-    removeBtn.textContent = "从书架移除";
+    removeBtn.textContent = "Remove from shelf";
     removeBtn.classList.remove("is-armed");
-    $("#add-book-title").textContent = book ? "编辑这本书" : "添加一本书";
+    $("#add-book-title").textContent = book ? "Edit book" : "Add a book";
     $(".add-book-eyebrow").textContent = book
       ? "EDIT BOOK"
       : "ADD TO YOUR SHELF";
-    $(".add-book-submit").textContent = book ? "保存" : "放上书架";
+    $(".add-book-submit").textContent = book ? "Save" : "Add to shelf";
     source = book ? "keep" : "file";
     refresh();
   }
@@ -530,7 +530,7 @@ export function createAddBookDialog(opts: {
     },
   };
 }
-function wan(n: number) {
-  if (n >= 10000) return `约 ${(n / 10000).toFixed(n >= 100000 ? 0 : 1)} 万字`;
-  return `约 ${n} 字`;
+function measure(n: number) {
+  if (n >= 1000) return `~${(n / 1000).toFixed(n >= 100000 ? 0 : 1)}k characters`;
+  return `~${n} characters`;
 }

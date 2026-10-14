@@ -104,8 +104,8 @@ Trinket Lab only owns the reusable interaction object and generic adapters.
 
 Do not introduce workspace/package publishing infrastructure until there are multiple implemented components that benefit from it. Start with ordinary folders and working demos, then extract shared build tooling only after repetition appears.
 
-## 6. Bookshelf Lab
+## 6. Bookshelf
 
-`components/bookshelf-lab/` is an independent TypeScript package with its own dependency lockfile, Vite demo and tests. `src/core/` owns book data, layout, state and persistence; rendering and pointer input are adapters; `ReaderRenderer` allows replacing SimplePageReader without changing the shelf core. Demo-specific composition and content live in `src/demo/`. See its [architecture](../components/bookshelf-lab/docs/ARCHITECTURE.md).
+`components/bookshelf/` is an independent TypeScript package with its own dependency lockfile, Vite demo and tests. `src/core/` owns book data, layout, state and persistence; rendering and pointer input are adapters; `ReaderRenderer` allows replacing SimplePageReader without changing the shelf core. Demo-specific composition and content live in `src/demo/`. See its [architecture](../components/bookshelf/docs/ARCHITECTURE.md).
 
-The existing photo and printer components retain their build-free workflow. Bookshelf Lab is built from its own directory during GitHub Pages deployment and copied into `demos/bookshelf/`; no shared workspace or committed `dist/` is required.
+The existing photo and printer components retain their build-free workflow. Bookshelf is built from its own directory during GitHub Pages deployment and copied into `demos/bookshelf/`; no shared workspace or committed `dist/` is required.

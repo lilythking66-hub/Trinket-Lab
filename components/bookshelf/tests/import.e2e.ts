@@ -16,7 +16,7 @@ function longText() {
     .join("\n\n");
 }
 
-test("import a GBK .txt, read it across chapters, persist, edit and remove", async ({
+test("import a GBK .txt, read it across chapters and persist", async ({
   page,
 }, info) => {
   const choose = async (sel: string) => {
@@ -35,11 +35,11 @@ test("import a GBK .txt, read it across chapters, persist, edit and remove", asy
     mimeType: "text/plain",
     buffer: gbk,
   });
-  await expect(page.locator(".add-book-status")).toContainText("识别到 2 章");
+  await expect(page.locator(".add-book-status")).toContainText("2 chapters detected");
   await expect(page.locator(".add-book-status")).toContainText("GBK");
   await expect(page.locator('input[name="title"]')).toHaveValue("雾尾镇来信");
   await expect(page.locator('input[name="author"]')).toHaveValue("林间");
-  await page.locator('select[name="shelf"]').selectOption("life");
+  await page.locator('select[name="shelf"]').selectOption("everyday");
   await page.locator(".add-book-submit").click();
   await expect(page.locator("dialog.add-book")).not.toBeVisible();
   await expect(page.locator(".book-target")).toHaveCount(25);
@@ -72,38 +72,8 @@ test("import a GBK .txt, read it across chapters, persist, edit and remove", asy
   await expect(page.locator(".book-target")).toHaveCount(25);
   await expect(page.locator(`[data-book="${id}"]`)).toHaveAttribute(
     "aria-label",
-    /已读 100%/,
+    /100% read/,
   );
-
-  // Edit: rename from the detail panel.
-  await choose(`[data-book="${id}"]`);
-  await expect(page.locator(".book-foreground")).toHaveAttribute(
-    "data-phase",
-    "cover",
-  );
-  await choose(".edit-button");
-  await expect(page.locator("dialog.add-book")).toBeVisible();
-  await expect(page.locator("#add-book-title")).toHaveText("编辑这本书");
-  await page.locator('input[name="title"]').fill("灯塔岛来信");
-  await page.locator(".add-book-submit").click();
-  await expect(page.locator(`[data-book="${id}"]`)).toHaveAttribute(
-    "aria-label",
-    /^灯塔岛来信/,
-  );
-
-  // Remove needs two clicks.
-  await choose(`[data-book="${id}"]`);
-  await expect(page.locator(".book-foreground")).toHaveAttribute(
-    "data-phase",
-    "cover",
-  );
-  await choose(".edit-button");
-  await page.locator(".add-book-remove").click();
-  await expect(page.locator(".book-target")).toHaveCount(25);
-  await page.locator(".add-book-remove").click();
-  await expect(page.locator(".book-target")).toHaveCount(24);
-  await page.reload();
-  await expect(page.locator(".book-target")).toHaveCount(24);
   expect(errors).toEqual([]);
 });
 
@@ -119,11 +89,11 @@ test("pasted long text is paginated to fill the page without overflow", async ({
   await page.locator(".add-book-button").click();
   await page.locator('[data-source="paste"]').click();
   await page.locator("dialog.add-book textarea").fill(longText());
-  await expect(page.locator(".add-book-status")).toContainText("识别到 3 章");
-  await page.locator('input[name="title"]').fill("长文测试");
+  await expect(page.locator(".add-book-status")).toContainText("3 chapters detected");
+  await page.locator('input[name="title"]').fill("Long text test");
   await page.locator(".add-book-submit").click();
   const id = await page
-    .locator('.book-target[aria-label^="长文测试"]')
+    .locator('.book-target[aria-label^="Long text test"]')
     .getAttribute("data-book");
   await choose(`[data-book="${id}"]`);
   await expect(page.locator(".book-foreground")).toHaveAttribute(

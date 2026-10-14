@@ -1,8 +1,8 @@
-# Bookshelf Lab Architecture
+# Bookshelf Architecture
 
 ## Ownership
 
-Bookshelf Lab is split so product UI and content do not leak into the reusable engine.
+Bookshelf is split so product UI and content do not leak into the reusable engine.
 
 ```text
 Host / Demo
@@ -80,7 +80,7 @@ Visual direction is a host concern.
 - `BookPresentation.decorate()` lets the host add optional cover/endpaper decoration.
 - `responsive/Layouts.ts` owns size and motion-related layout parameters.
 
-The bundled demo may use product-like copy or an alternate skin, but those choices are not part of the engine contract.
+The bundled demo is intentionally neutral. Alternate skins and product copy remain host concerns, not engine contract.
 
 ## Local library and imports
 
@@ -123,4 +123,4 @@ view.destroy();
 
 ## Deliberate non-goals
 
-Bookshelf Lab does not provide accounts, cloud sync, a remote catalog, DRM bypass, rich EPUB layout, page-curl physics, or a container-scoped foreground presentation.
+Bookshelf does not provide accounts, cloud sync, a remote catalog, DRM bypass, rich EPUB layout, page-curl physics, or a container-scoped foreground presentation.

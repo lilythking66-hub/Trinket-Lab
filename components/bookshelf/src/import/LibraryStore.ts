@@ -30,7 +30,7 @@ export interface BookStore {
 /** IndexedDB store: holds whole texts (localStorage is ~5 MB and synchronous). */
 export class IndexedDBBookStore implements BookStore {
   private db?: Promise<IDBDatabase>;
-  constructor(private name = "bookshelf-lab-library") {}
+  constructor(private name = "trinket-bookshelf-library") {}
   private open() {
     return (this.db ??= new Promise((resolve, reject) => {
       const req = indexedDB.open(this.name, 1);

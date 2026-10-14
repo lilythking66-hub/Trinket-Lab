@@ -84,12 +84,12 @@ describe("engine + persistence", () => {
     const f = fixture();
     const e = new BookshelfEngine(books, shelves, f.persistence);
     e.beginDrag("book-3");
-    e.move("book-3", "literature", "book-1");
+    e.move("book-3", "fiction", "book-1");
     e.endDrag();
     const fresh = new BookshelfEngine(books, shelves, f.persistence);
     expect(
       fresh.books
-        .filter((b) => b.shelfId === "literature")
+        .filter((b) => b.shelfId === "fiction")
         .sort((a, b) => a.order - b.order)
         .slice(0, 3)
         .map((b) => b.id),
@@ -99,9 +99,9 @@ describe("engine + persistence", () => {
     const f = fixture();
     const e = new BookshelfEngine(books, shelves, f.persistence);
     e.beginDrag("book-3");
-    e.move("book-3", "life", "book-9");
+    e.move("book-3", "everyday", "book-9");
     e.endDrag(true);
-    expect(e.book("book-3").shelfId).toBe("literature");
+    expect(e.book("book-3").shelfId).toBe("fiction");
     expect(e.book("book-3").order).toBe(2);
     expect(f.storage.getItem()).toBeNull();
   });
@@ -109,11 +109,11 @@ describe("engine + persistence", () => {
     const f = fixture();
     const e = new BookshelfEngine(books, shelves, f.persistence);
     e.beginDrag("book-1");
-    e.move("book-1", "thought");
+    e.move("book-1", "ideas");
     e.endDrag();
     e.setProgress("book-1", 0.5);
     const fresh = new BookshelfEngine(books, shelves, f.persistence);
-    expect(fresh.book("book-1").shelfId).toBe("thought");
+    expect(fresh.book("book-1").shelfId).toBe("ideas");
     expect(fresh.book("book-1").progress).toBe(0.5);
     expect(fresh.book("book-1").pages.length).toBe(3);
   });
@@ -225,7 +225,7 @@ describe("neutral base", () => {
     expect(t.shelf.top).toBe(0x123456);
     expect(t.shelf.front).toBe(neutralTheme.shelf.front);
     expect(neutralTheme.spine.mark).toBeNull();
-    expect(oakTheme.spine.mark).toBe("B · L");
+    expect(oakTheme.spine.mark).toBeNull();
   });
   it("default copy is neutral and hides continuation rows", () => {
     expect(

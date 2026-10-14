@@ -1,12 +1,12 @@
-# Bookshelf Lab 📚
+# Bookshelf 📚
 
 A reusable 2D / 2.5D bookshelf and reader component built with TypeScript, PixiJS 8, and GSAP.
 
 [**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/)
 
-[![Bookshelf Lab demo](../../docs/demo-images/bookshelf-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/)
+[![Bookshelf demo](../../docs/demo-images/bookshelf-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/)
 
-Bookshelf Lab focuses on the physical feeling of taking a book from a shelf, opening it, reading it, and putting it back. Product copy, skins, catalog data, and storage policy stay outside the core engine.
+Bookshelf focuses on the physical feeling of taking a book from a shelf, opening it, reading it, and putting it back. Product copy, skins, catalog data, and storage policy stay outside the core engine.
 
 ## What it includes
 
@@ -24,10 +24,10 @@ The demo contains 24 procedural books. Three include original sample reading tex
 
 ## Quick start
 
-Bookshelf Lab is self-contained inside Trinket Lab.
+Bookshelf is self-contained inside Trinket Lab.
 
 ```sh
-cd components/bookshelf-lab
+cd components/bookshelf
 npm ci
 npm run dev
 ```

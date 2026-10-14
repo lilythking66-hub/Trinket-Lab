@@ -1,10 +1,10 @@
-# Bookshelf Lab Acceptance
+# Bookshelf Acceptance
 
 This document describes the public automated coverage and the limits that remain outside the current test matrix.
 
 ## Automated suites
 
-Run from `components/bookshelf-lab/`:
+Run from `components/bookshelf/`:
 
 ```sh
 npm run build
