@@ -1,0 +1,50 @@
+/* Bookshelf base: structure only, plus neutral defaults expressed as --bsl-* variables.
+   Hosts restyle by overriding variables or these class names; no product styling lives here. */
+.bookshelf-stage {
+  position: relative;
+  isolation: isolate;
+}
+.bookshelf-stage > canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+}
+.shelf-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.shelf-label {
+  position: absolute;
+  font: 10px / 1.2 var(--bsl-sans, system-ui, sans-serif);
+  letter-spacing: 1px;
+  color: var(--bsl-muted, #8a8781);
+  white-space: nowrap;
+}
+.book-targets {
+  position: absolute;
+  inset: 0;
+}
+.book-target {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  border-radius: 2px;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: grab;
+}
+.book-target:focus-visible {
+  outline: 1px dashed var(--bsl-accent, #5b5b5b);
+  outline-offset: 6px;
+}
+.book-targets.is-dragging,
+.book-targets.is-dragging .book-target {
+  cursor: grabbing;
+}

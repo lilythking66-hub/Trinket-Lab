@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <title>Bookshelf Lab · Neutral base</title>
+    <style>
+      body {
+        margin: 0;
+        background: #f4f2ee;
+        font-family: system-ui, sans-serif;
+        color: #3f3f3c;
+      }
+      .scene {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+        gap: 32px;
+        max-width: 1100px;
+        margin: 48px auto;
+        padding: 0 16px;
+      }
+      .scene > aside {
+        padding: 24px;
+        border: 1px solid #e3dfd8;
+        border-radius: 12px;
+      }
+      h1 {
+        font-size: 15px;
+        font-weight: 500;
+        margin: 0 0 6px;
+      }
+      p {
+        font-size: 13px;
+        color: #8a8781;
+        margin: 0 0 20px;
+      }
+      @media (max-width: 760px) {
+        .scene {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="scene">
+      <section>
+        <h1>Host content</h1>
+        <p>
+          The shelf on the right is the neutral base with no host styling:
+          default theme, default English copy, container breakpoints.
+        </p>
+      </section>
+      <aside>
+        <h1>Reading corner</h1>
+        <p>Embedded at 420px.</p>
+        <div id="shelf"></div>
+      </aside>
+    </main>
+    <script type="module" src="/src/demo/embed.ts"></script>
+  </body>
+</html>

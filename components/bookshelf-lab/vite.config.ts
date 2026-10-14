@@ -1,0 +1,9 @@
+import { defineConfig } from "vite";
+export default defineConfig({
+  base: "./",
+  server: { host: "0.0.0.0", port: 5186, strictPort: true },
+  preview: { host: "0.0.0.0", port: 4186, strictPort: true },
+  build: {
+    rollupOptions: { input: { main: "index.html", embed: "embed.html" } },
+  },
+});

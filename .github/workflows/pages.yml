@@ -24,15 +24,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: components/bookshelf-lab/package-lock.json
+
+      - name: Build Bookshelf Lab
+        working-directory: components/bookshelf-lab
+        run: |
+          npm ci
+          npm run build
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Prepare static site
         run: |
-          mkdir -p _site/components _site/demos _site/triggers _site/skins
+          mkdir -p _site/components _site/demos _site/demos/bookshelf _site/triggers _site/skins
           cp index.html _site/
           cp -R components/camera-kit components/instant-camera components/instant-photo components/photo-engine components/printer _site/components/
           cp -R demos/instant-photo-family demos/printer _site/demos/
+          cp -R components/bookshelf-lab/dist/. _site/demos/bookshelf/
           cp -R triggers/qr _site/triggers/
           for skin in skins/*; do
             if [ -d "$skin/web" ]; then
