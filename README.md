@@ -28,6 +28,10 @@ The public repository shows working components and their integration contracts. 
 
 The first Trinket Lab family is built around a shared photo engine.
 
+| Instant Photo | Instant Camera |
+| --- | --- |
+| [![Instant Photo demo](docs/demo-images/instant-photo-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/) | [![Instant Camera demo](docs/demo-images/instant-camera-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/) |
+
 ~~~text
 Trigger / Content Source
         │
@@ -139,6 +143,8 @@ Product-specific copy belongs in the host app, not in the shared engine.
 ## Printer
 
 [Printer](components/printer/README.md) is the second build-free Trinket family: a platform-neutral rigid-sheet feed core plus the `<trinket-printer>` Web Component and a replaceable porcelain skin. Paper content stays in the host through a slot, so postcards, notes, receipts or product-specific layouts all reuse the same feed mechanics.
+
+[![Printer demo](docs/demo-images/printer-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/)
 
 ### ▶ [Open the live Printer demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/)
 

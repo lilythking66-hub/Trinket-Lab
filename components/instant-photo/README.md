@@ -5,6 +5,10 @@ The camera faces you.
 - **Core job: prepared content → instant photo.** Call `print({ image, caption, … })` from code, a button, a gift flow or a QR trigger, or let the shutter print `el.recipe` / the `src` attribute. No camera is involved, and the camera code isn't even loaded. This is the path used by location/collection experiences such as the Shuanglang stamp project.
 - **Optional: selfie lens** (add the `selfie` attribute). Tap the lens or the shutter: the front camera turns on and you see yourself *inside the lens*, through a fisheye. Press the shutter to take the shot. The print uses the same fisheye, so it matches what was in the lens.
 
+[![Instant Photo demo](../../docs/demo-images/instant-photo-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
+
+[Open the live demo →](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
+
 ## Use
 
 ~~~html

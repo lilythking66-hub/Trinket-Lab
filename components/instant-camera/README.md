@@ -4,6 +4,10 @@ The screen faces you and the lens faces the world. The screen is a viewfinder, s
 
 This component owns the live preview and shutter capture; camera access itself comes from the shared `components/camera-kit/camera-source.js`. The captured frame is handed to the shared Photo Engine, so ejection and developing are exactly the same as in Instant Photo.
 
+[![Instant Camera demo](../../docs/demo-images/instant-camera-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
+
+[Open the live demo →](https://lilythking66-hub.github.io/Trinket-Lab/demos/instant-photo-family/)
+
 ## Use
 
 ~~~html

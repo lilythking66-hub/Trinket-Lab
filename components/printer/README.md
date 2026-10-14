@@ -4,7 +4,9 @@ A reusable paper-feed trinket extracted from the approved printer-motion-lab fou
 
 The important illusion is simple: **a complete rigid sheet already exists inside the machine and is transported by rollers.** The printer never grows a rectangle downward to fake printing.
 
-[Live demo →](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/)
+[![Printer demo](../../docs/demo-images/printer-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/)
+
+[Open the live demo →](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/)
 
 ## What moved into Trinket Lab
 
