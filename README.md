@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -14,6 +14,7 @@ The goal is not to build one giant UI framework. Each trinket should stay small,
 - 🖨️ [**Printer →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/) — try the same feed engine with a postcard, note, and long receipt.
 - 📚 [**Bookshelf →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/) — take out, reorder, open, read, and return books.
 - 🎰 [**Gacha →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/) — turn the knob, take the capsule, pull it apart; swap the prizes freely.
+- 💿 [**Turntable →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/) — import your own music, press it into a record, drop the needle.
 
 The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
@@ -86,7 +87,8 @@ Trinket-Lab/
 │   ├── instant-camera/
 │   ├── printer/
 │   ├── bookshelf/
-│   └── gacha/
+│   ├── gacha/
+│   └── turntable/
 ├── skins/
 │   ├── neutral-camera-v1/
 │   └── porcelain-printer-v1/
@@ -95,7 +97,8 @@ Trinket-Lab/
 ├── demos/
 │   ├── instant-photo-family/
 │   ├── printer/
-│   └── gacha/
+│   ├── gacha/
+│   └── turntable/
 └── docs/
     └── ARCHITECTURE.md
 ~~~
@@ -190,6 +193,24 @@ Prizes are host content — `<template data-prize>` children or a `prizes` array
 ~~~
 
 ### ▶ [Open the live Gacha demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/)
+
+## Turntable
+
+[Turntable](components/turntable/README.md) is a build-free `<trinket-turntable>` Web Component: a 2.5D vintage record player with platter inertia, a draggable tonearm that maps to the song position, cueing, 33/45 speeds, an optional acrylic lid and four finishes. The music's playback rate follows the platter, so switching off mid-song slurs it down like a real deck.
+
+Local music becomes records on the device: tags and cover art are read from MP3, M4A, FLAC, OGG and WAV (including legacy GBK/Big5 tags), the cover becomes the label and the grooves are pressed from the song's loudness. The reader and record maker are standalone modules other trinkets can reuse.
+
+[![Turntable demo](docs/demo-images/turntable-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/)
+
+~~~html
+<script type="module" src="components/turntable/turntable-element.js"></script>
+<trinket-turntable lid="open"></trinket-turntable>
+<script type="module">
+  document.querySelector("trinket-turntable").load(file, { autoplay: true }); // a File, a record, or { src, title, artist, cover }
+</script>
+~~~
+
+### ▶ [Open the live Turntable demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/)
 
 ## License
 

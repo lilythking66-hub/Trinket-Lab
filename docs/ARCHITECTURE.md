@@ -113,3 +113,9 @@ The existing photo and printer components retain their build-free workflow. Book
 ## 7. Gacha
 
 `components/gacha/` follows the printer's build-free shape. `gacha-core.js` owns the state machine (locked → idle → turning → dispensing → waiting → presenting → revealed), the weighted draw, stock and the knob ratchet; `capsule-physics.js` owns the capsule pile. Neither touches the DOM. `gacha-element.js` renders the procedural skin from `machine-art.js` and wires pointer/keyboard input. Prize content, draw rules decided by a server (`resolvePrize`), payments (`insertCoin()` with `coin-input="none"`) and collections stay in the host product.
+
+## 8. Turntable
+
+`components/turntable/` is build-free like the printer and gacha. `turntable-core.js` owns the mechanics without the DOM: platter inertia, the tonearm modes (rest → held / swing → lowering → tracking → run-out) and the mapping between arm angle and song position. `audio-engine.js` plays the music through an `<audio>` element whose playback rate follows the platter, plus synthesized crackle and mechanical sounds. `deck-art.js` draws the deck with an orthographic camera computed in JS (affine planes + SVG cylinders, no CSS 3D).
+
+The local-music pipeline is deliberately separate from the deck: `metadata.js` (tags + cover from MP3/M4A/FLAC/OGG/WAV) → `record-maker.js` (record object, palette, loudness envelope) → `record-art.js` (vinyl, label, sleeve). Other trinkets can reuse it without the turntable. The crate, persistence of imported files, playlists and any product rules stay in the host.
