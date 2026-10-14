@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -74,13 +74,16 @@ Trinket-Lab/
 │   ├── photo-engine/
 │   ├── camera-kit/
 │   ├── instant-photo/
-│   └── instant-camera/
+│   ├── instant-camera/
+│   └── printer/
 ├── skins/
-│   └── neutral-camera-v1/
+│   ├── neutral-camera-v1/
+│   └── porcelain-printer-v1/
 ├── triggers/
 │   └── qr/
 ├── demos/
-│   └── instant-photo-family/
+│   ├── instant-photo-family/
+│   └── printer/
 └── docs/
     └── ARCHITECTURE.md
 ~~~
@@ -89,7 +92,7 @@ This is intentionally a lightweight foundation rather than a full monorepo setup
 
 ## Future trinkets
 
-Likely future residents include printers, books and bookshelves, gacha machines, gift boxes, radios, photo booths, and other interactive props.
+Likely future residents include books and bookshelves, gacha machines, gift boxes, radios, photo booths, and other interactive props.
 
 ## Quick start
 
@@ -129,3 +132,9 @@ Product-specific copy belongs in the host app, not in the shared engine.
 ## Status
 
 **Instant Photo Family V1 is implemented.** Photo Engine, Camera Kit, Instant Photo, Instant Camera, the optional QR trigger, replaceable skins and the public demo are working. The acceptance suite covers desktop Chrome, iPhone-sized emulation, camera lifecycle cleanup, lazy selfie loading and QR removal (`demos/instant-photo-family/tests/acceptance.cjs`). See [Instant Photo V1](docs/INSTANT_PHOTO_V1.md#v1-status).
+
+## Printer
+
+[Printer](components/printer/README.md) is the second build-free Trinket family: a platform-neutral rigid-sheet feed core plus the `<trinket-printer>` Web Component and a replaceable porcelain skin. Paper content stays in the host through a slot, so postcards, notes, receipts or product-specific layouts all reuse the same feed mechanics.
+
+[Try the live Printer demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/printer/), which deliberately feeds three different paper sizes through the same machine.

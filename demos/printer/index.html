@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f2ec">
+  <title>Printer · Trinket Lab</title>
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="../../components/printer/printer-element.js"></script>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Trinket Lab · Printer</p>
+    <h1>A tiny paper-feed machine.</h1>
+    <p class="dek">One physical sheet, transported by rollers. Change the paper; keep the motion.</p>
+  </header>
+
+  <main>
+    <section class="machine">
+      <trinket-printer id="printer" paper-width="586" paper-height="733">
+        <article slot="paper" id="paper" class="paper postcard">
+          <div class="postcard-art">
+            <span class="sun"></span>
+            <span class="mountain one"></span>
+            <span class="mountain two"></span>
+            <span class="lake"></span>
+          </div>
+          <p class="paper-kicker">A SMALL PLACE TO KEEP</p>
+          <h2>Lakeside afternoon</h2>
+          <p>Wind, water, and nowhere else to be.</p>
+          <span class="paper-no">NO. 001</span>
+        </article>
+      </trinket-printer>
+    </section>
+
+    <aside class="panel">
+      <div class="state-line"><span class="dot"></span><span id="state">idle</span></div>
+      <p class="label">PAPER</p>
+      <div class="choices" role="group" aria-label="Choose paper">
+        <button class="choice active" data-paper="postcard">Postcard</button>
+        <button class="choice" data-paper="note">Note</button>
+        <button class="choice" data-paper="receipt">Receipt</button>
+      </div>
+      <button class="print" id="print">Print</button>
+      <div class="secondary">
+        <button id="reset">Reset</button>
+        <button id="cancel" disabled>Cancel</button>
+      </div>
+      <label class="seek">Inspect feed <output id="seek-out">0%</output>
+        <input id="seek" type="range" min="0" max="100" value="0">
+      </label>
+      <p class="footnote">The paper always exists at full size. Only its position changes.</p>
+    </aside>
+  </main>
+
+  <footer>
+    <a href="../../">Trinket Lab</a>
+    <span>Porcelain Printer V1</span>
+  </footer>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>

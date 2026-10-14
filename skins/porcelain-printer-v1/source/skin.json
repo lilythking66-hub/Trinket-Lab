@@ -1,0 +1,12 @@
+{
+  "id": "porcelain-printer-v1",
+  "canvasWidth": 1254,
+  "canvasHeight": 1254,
+  "slotX": 627,
+  "slotY": 392,
+  "slotWidth": 723,
+  "defaultPaperWidth": 586,
+  "defaultPaperHeight": 733,
+  "gripDepth": 16,
+  "button": { "x": 997, "y": 276, "radius": 40 }
+}

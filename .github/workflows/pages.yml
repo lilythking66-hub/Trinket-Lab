@@ -29,10 +29,18 @@ jobs:
 
       - name: Prepare static site
         run: |
-          mkdir -p _site/skins/neutral-camera-v1
+          mkdir -p _site/components _site/demos _site/triggers _site/skins
           cp index.html _site/
-          cp -R components demos triggers _site/
-          cp -R skins/neutral-camera-v1/web _site/skins/neutral-camera-v1/
+          cp -R components/camera-kit components/instant-camera components/instant-photo components/photo-engine components/printer _site/components/
+          cp -R demos/instant-photo-family demos/printer _site/demos/
+          cp -R triggers/qr _site/triggers/
+          for skin in skins/*; do
+            if [ -d "$skin/web" ]; then
+              name=$(basename "$skin")
+              mkdir -p "_site/skins/$name"
+              cp -R "$skin/web" "_site/skins/$name/"
+            fi
+          done
 
       - name: Upload static site
         uses: actions/upload-pages-artifact@v4

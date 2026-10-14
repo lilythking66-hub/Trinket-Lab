@@ -3,16 +3,48 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="refresh" content="0; url=./demos/instant-photo-family/">
-  <link rel="canonical" href="./demos/instant-photo-family/">
-  <title>Trinket Lab · Instant Photo Demo</title>
+  <meta name="theme-color" content="#f2efe9">
+  <title>Trinket Lab</title>
   <style>
-    body { font: 16px/1.5 system-ui, sans-serif; display: grid; min-height: 100vh; place-items: center; margin: 0; background: #ece8e2; color: #302e2b; }
-    a { color: inherit; }
+    :root { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #302e2b; background: #f2efe9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; }
+    main { max-width: 980px; margin: 0 auto; padding: 72px 28px 56px; }
+    .eyebrow { margin: 0 0 12px; color: #8b877f; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(38px, 7vw, 72px); font-weight: 520; letter-spacing: -.05em; }
+    .intro { max-width: 650px; margin: 18px 0 46px; color: #77736b; line-height: 1.8; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .card { min-height: 220px; padding: 26px; border: 1px solid #d7d1c8; border-radius: 18px; background: rgba(255,255,255,.45); color: inherit; text-decoration: none; transition: transform .18s ease, background .18s ease; }
+    .card:hover { transform: translateY(-3px); background: rgba(255,255,255,.7); }
+    .icon { display: block; font-size: 42px; margin-bottom: 28px; }
+    h2 { margin: 0 0 10px; font-size: 22px; font-weight: 560; }
+    .card p { margin: 0; color: #817d75; line-height: 1.7; }
+    footer { margin-top: 38px; color: #959088; font-size: 12px; }
+    footer a { color: inherit; }
+    @media (max-width: 650px) { main { padding-top: 46px; } .grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-  <p>Opening the <a href="./demos/instant-photo-family/">Trinket Lab Instant Photo demo</a>…</p>
-  <script>location.replace(new URL("./demos/instant-photo-family/", location.href));</script>
+  <main>
+    <p class="eyebrow">Trinket Lab</p>
+    <h1>Small digital objects that feel like things.</h1>
+    <p class="intro">A growing collection of reusable tactile interactions for the web. Pick one up and play with it.</p>
+
+    <section class="grid" aria-label="Live demos">
+      <a class="card" href="./demos/instant-photo-family/">
+        <span class="icon">📸</span>
+        <h2>Instant Photo</h2>
+        <p>Flash, eject, develop, take. Prepared photos and an optional live camera share one photo engine.</p>
+      </a>
+
+      <a class="card" href="./demos/printer/">
+        <span class="icon">🖨️</span>
+        <h2>Printer</h2>
+        <p>A complete sheet is physically fed through the rollers. Swap the paper content without touching the motion.</p>
+      </a>
+    </section>
+
+    <footer><a href="https://github.com/lilythking66-hub/Trinket-Lab">View the source on GitHub</a></footer>
+  </main>
 </body>
 </html>

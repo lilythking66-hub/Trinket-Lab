@@ -1,0 +1,110 @@
+:root {
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #34342f;
+  background: #f4f1eb;
+  --muted: #858278;
+  --line: #d8d2c8;
+  --ink: #34342f;
+  --accent: #5d7256;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: .45; }
+header {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 46px 48px 20px;
+}
+.eyebrow, .label {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+h1 { margin: 0; font-size: clamp(26px, 4vw, 48px); font-weight: 520; letter-spacing: -.04em; }
+.dek { max-width: 560px; margin: 13px 0 0; color: var(--muted); line-height: 1.7; }
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 48px 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 48px;
+  align-items: start;
+}
+.machine { min-width: 0; display: grid; place-items: start center; }
+trinket-printer { --trinket-printer-width: 620px; }
+.panel { padding-top: 76px; }
+.state-line { display: flex; gap: 8px; align-items: center; margin-bottom: 30px; font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #9baa91; }
+body[data-state="feeding"] .dot, body[data-state="settling"] .dot { background: #c49a55; box-shadow: 0 0 0 4px rgba(196,154,85,.12); }
+.choices { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+.choice, .secondary button {
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  padding: 4px 0 7px;
+  font-size: 12px;
+}
+.choice.active { color: var(--ink); border-color: var(--accent); }
+.print {
+  width: 100%;
+  border: 1px solid #53674e;
+  background: #53674e;
+  color: white;
+  border-radius: 6px;
+  padding: 13px 18px;
+  letter-spacing: .05em;
+}
+.secondary { display: flex; justify-content: center; gap: 28px; margin: 15px 0 30px; }
+.seek { display: block; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+.seek output { float: right; font-variant-numeric: tabular-nums; }
+.seek input { display: block; width: 100%; margin-top: 15px; accent-color: var(--accent); }
+.footnote { margin: 18px 0 0; color: #9a978e; font-size: 10px; line-height: 1.7; }
+footer {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 48px 32px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--muted);
+}
+footer a { color: inherit; }
+
+.paper { width: 100%; height: 100%; position: relative; overflow: hidden; color: #44443d; background: #fffdf8; }
+.paper h2 { font-family: Georgia, serif; font-size: 46px; line-height: 1.05; font-weight: 400; margin: 24px 42px 8px; }
+.paper > p:not(.paper-kicker) { margin: 0 42px; color: #79776e; font: 22px/1.55 Georgia, serif; }
+.paper-kicker { margin: 34px 42px 0; font-size: 13px; letter-spacing: .2em; color: #77756d; }
+.paper-no { position: absolute; right: 40px; bottom: 30px; font: 13px ui-monospace, monospace; color: #8b887e; }
+.postcard-art { position: relative; height: 330px; overflow: hidden; background: #d8e1df; }
+.sun { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: #e6b078; right: 78px; top: 62px; }
+.mountain { position: absolute; left: -8%; bottom: 70px; width: 72%; height: 190px; background: #7f9788; clip-path: polygon(0 100%, 52% 6%, 100% 100%); }
+.mountain.two { left: 38%; width: 78%; height: 160px; background: #9dad9f; }
+.lake { position: absolute; inset: auto 0 0; height: 92px; background: #8aa7aa; }
+.note { padding-top: 20px; }
+.note .handwriting { font-size: 28px !important; line-height: 1.7 !important; color: #55534d !important; }
+.note-lines { margin: 55px 42px 0; height: 250px; background: repeating-linear-gradient(to bottom, transparent 0 44px, #ded9cf 45px 46px); }
+.receipt { padding: 52px 34px; font-family: "Courier New", monospace; background: #fffef9; }
+.receipt-head { margin: 0; text-align: center; font-size: 24px; letter-spacing: .12em; }
+.receipt-sub { text-align: center; font-size: 13px; letter-spacing: .08em; color: #88847a; }
+.receipt hr { border: 0; border-top: 1px dashed #aaa69d; margin: 38px 0; }
+.row { display: flex; justify-content: space-between; gap: 18px; margin: 30px 0; font-size: 17px; }
+.total { font-weight: 700; }
+.thanks { margin-top: 58px; text-align: center; font-size: 14px; letter-spacing: .08em; }
+.barcode { width: 70%; height: 70px; margin: 40px auto 0; background: repeating-linear-gradient(90deg, #42423d 0 2px, transparent 2px 5px, #42423d 5px 6px, transparent 6px 10px); }
+
+@media (max-width: 760px) {
+  header { padding: 28px 20px 10px; }
+  main { padding: 0 20px 24px; display: flex; flex-direction: column; gap: 0; }
+  .machine { width: 100%; }
+  .panel { width: 100%; padding: 0 0 28px; }
+  footer { margin: 0 20px; padding: 18px 0 28px; }
+  .paper h2 { font-size: 38px; }
+}

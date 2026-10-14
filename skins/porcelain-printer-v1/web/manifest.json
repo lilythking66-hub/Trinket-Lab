@@ -1,0 +1,19 @@
+{
+  "name": "porcelain-printer-v1",
+  "version": 1,
+  "canvas": { "width": 1254, "height": 1254 },
+  "slot": { "x": 627, "y": 392, "width": 723 },
+  "paper": { "defaultWidth": 586, "defaultHeight": 733, "gripDepth": 16 },
+  "button": { "x": 997, "y": 276, "radius": 40 },
+  "motion": {
+    "speed": 245,
+    "startDelayMs": 120,
+    "startupRatio": 0.08,
+    "settleStartRatio": 0.88
+  },
+  "assets": {
+    "back": "printer-back.webp",
+    "front": "printer-front.webp",
+    "slotShadow": "slot-shadow.webp"
+  }
+}
