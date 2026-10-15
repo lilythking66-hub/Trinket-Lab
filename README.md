@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Typewriter](components/typewriter/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Typewriter](components/typewriter/README.md) · [Projector](components/projector/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -16,6 +16,7 @@ The goal is not to build one giant UI framework. Each trinket should stay small,
 - 🎰 [**Gacha →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/) — turn the knob, take the capsule, pull it apart; swap the prizes freely.
 - 💿 [**Turntable →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/) — import your own music, press it into a record, drop the needle.
 - ⌨️ [**Typewriter →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/typewriter/) — type on your own keyboard in any language; keys, typebars, carriage and bell answer.
+- 🎞️ [**Projector →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/projector/) — wind your photos onto a reel, run the filmstrip or project them in a dark room; MP4 too.
 
 The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
@@ -90,7 +91,8 @@ Trinket-Lab/
 │   ├── bookshelf/
 │   ├── gacha/
 │   ├── turntable/
-│   └── typewriter/
+│   ├── typewriter/
+│   └── projector/
 ├── skins/
 │   ├── neutral-camera-v1/
 │   └── porcelain-printer-v1/
@@ -101,7 +103,8 @@ Trinket-Lab/
 │   ├── printer/
 │   ├── gacha/
 │   ├── turntable/
-│   └── typewriter/
+│   ├── typewriter/
+│   └── projector/
 └── docs/
     └── ARCHITECTURE.md
 ~~~
@@ -234,6 +237,25 @@ Text is printed as grapheme clusters with East-Asian wide characters taking two 
 ~~~
 
 ### ▶ [Open the live Typewriter demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/typewriter/)
+
+## Projector
+
+[Projector](components/projector/README.md) is a build-free `<trinket-projector>` Web Component: a 2.5D vintage projector with brass reels, a film bay you load by dropping a film can through its hatch, a knurled focus ring and synthesized mechanics. A batch of photos becomes a looping reel shown two ways: **Filmstrip**, where the film leaves the machine and opens up along one long, low arc (auto-run, drag, fling, scroll, reels in sync), and **Cinema**, where the room dims and slides are projected with vignette, grain, gate weave and dust in the beam. Local MP4 (H.264) video plays in Cinema and drives the reels. Both modes share one reading position.
+
+[![Projector demo](docs/demo-images/projector-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/projector/)
+
+~~~html
+<script type="module" src="components/projector/projector-element.js"></script>
+<trinket-projector mode="filmstrip"></trinket-projector>
+<script type="module">
+  const pj = document.querySelector("trinket-projector");
+  await pj.loadPhotos(input.files);   // or URLs / { src, title }
+  pj.play();                          // switches the power on
+  pj.mode = "cinema";                 // same photo, projected
+</script>
+~~~
+
+### ▶ [Open the live Projector demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/projector/)
 
 ## License
 

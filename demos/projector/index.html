@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f1e8da">
+  <title>Projector · Trinket Lab</title>
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="../../components/projector/projector-element.js"></script>
+</head>
+<body data-mode="filmstrip">
+  <header>
+    <p class="eyebrow">Trinket Lab · Projector</p>
+    <h1>Lights down, reel on.</h1>
+    <p class="dek">Load a stack of photos and they become a roll of film. Let it run past as a filmstrip, or dim the room and project them one slide at a time. Local MP4 videos play in the cinema. Everything stays on your device.</p>
+  </header>
+
+  <main>
+    <trinket-projector id="pj" label="TRINKET" model="Series 8"></trinket-projector>
+    <p class="wide-note">The projector is designed for wide screens. On a phone it is shown scaled down.</p>
+    <p class="hint" id="hint">Flip the power switch, then press the middle key.</p>
+
+    <section class="bar">
+      <div class="seg" role="group" aria-label="Mode" id="modes">
+        <button class="seg-btn active" data-mode="filmstrip">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3z M3 9h18 M3 15h18 M7 6v3 M11 6v3 M15 6v3 M19 6v3 M7 15v3 M11 15v3 M15 15v3 M19 15v3"/></svg>
+          Filmstrip
+        </button>
+        <button class="seg-btn" data-mode="cinema">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3z M8 20h8 M12 16v4"/></svg>
+          Cinema
+        </button>
+      </div>
+
+      <div class="transport">
+        <button class="round" id="prev" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M11 6 4 12l7 6z M20 6l-7 6 7 6z"/></svg></button>
+        <button class="round big" id="play" aria-label="Play"><svg viewBox="0 0 24 24"><path class="i-play" d="M8 5l11 7-11 7z"/><path class="i-pause" d="M7 5h4v14H7z M13 5h4v14h-4z"/></svg></button>
+        <button class="round" id="next" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M13 6l7 6-7 6z M4 6l7 6-7 6z"/></svg></button>
+        <label class="speed">Speed
+          <select id="speed">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="1.5">1.5×</option>
+            <option value="2">2×</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="source" role="group" aria-label="Cinema source" id="sources">
+        <button class="chip active" data-source="photos">Photos</button>
+        <button class="chip" data-source="video" disabled>Video</button>
+      </div>
+    </section>
+
+    <section class="reel">
+      <div class="reel-head">
+        <p class="label"><span id="count">0</span> frames on the reel</p>
+        <div class="imports">
+          <label class="import"><input type="file" id="import-photos" multiple accept="image/*"> + Photos</label>
+          <label class="import"><input type="file" id="import-video" accept="video/mp4,video/*"> + MP4 video</label>
+          <button class="text-btn" id="reset">Demo reel</button>
+        </div>
+      </div>
+      <ol class="thumbs" id="thumbs" aria-label="Frames"></ol>
+      <p class="footnote" id="footnote">JPG · PNG · WebP, as many as you like. Video: MP4 (H.264). Files are read on your device and never uploaded.</p>
+    </section>
+
+    <section class="extras">
+      <div>
+        <p class="label">FINISH</p>
+        <div class="swatches" role="group" aria-label="Finish" id="themes">
+          <button class="swatch active" data-theme="" style="--c:#e9dec8;--b:#2f4a3f" aria-label="Ivory"></button>
+          <button class="swatch" data-theme="green" style="--c:#5d7a68;--b:#2b2621" aria-label="Green"></button>
+          <button class="swatch" data-theme="walnut" style="--c:#7a4a2b;--b:#2a221c" aria-label="Walnut"></button>
+        </div>
+      </div>
+      <div>
+        <p class="label">PROJECTION</p>
+        <label class="range">Film grain <input type="range" id="grain" min="0" max="1" step="0.05" value="0.5"></label>
+        <label class="range">Slide every <input type="range" id="interval" min="2" max="10" step="1" value="4"><output id="interval-out">4s</output></label>
+      </div>
+      <div>
+        <p class="label">SOUND</p>
+        <label class="toggle"><input type="checkbox" id="sfx" checked> Mechanical sounds</label>
+        <button class="text-btn" id="defocus">Knock the focus off</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="../../">Trinket Lab</a>
+    <span>Projector V1</span>
+  </footer>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>
