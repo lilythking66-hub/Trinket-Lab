@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crank Press · lifecycle tests</title>
+  <style>
+    body { font: 13px/1.6 ui-monospace, Menlo, monospace; margin: 24px; background: #f4efe6; color: #2f2924; }
+    .pass { color: #2d6a3e; } .fail { color: #a3262c; font-weight: 600; }
+    #stage { width: 360px; }
+  </style>
+  <script type="module" src="../../../components/crank-press/press-element.js"></script>
+</head>
+<body>
+  <h1>Crank Press lifecycle &amp; promise tests</h1>
+  <p>Open from a local server; results appear below and on <code>window.__results</code>.</p>
+  <div id="stage"></div>
+  <ol id="out"></ol>
+<script type="module">
+const out = document.getElementById("out");
+const stage = document.getElementById("stage");
+const results = [];
+window.__results = results;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const frames = (n = 2) => new Promise((r) => { const f = () => (--n <= 0 ? r() : requestAnimationFrame(f)); requestAnimationFrame(f); });
+/** Resolve to "timeout" if p hasn't settled within ms. */
+const within = (p, ms) => Promise.race([p, sleep(ms).then(() => "timeout")]);
+function report(name, ok, info = "") {
+  results.push({ name, ok, info });
+  const li = document.createElement("li");
+  li.className = ok ? "pass" : "fail";
+  li.textContent = `${ok ? "PASS" : "FAIL"}  ${name}${info ? "  — " + info : ""}`;
+  out.append(li);
+}
+async function fresh(attrs = "") {
+  stage.innerHTML = `<trinket-press sfx="off" ${attrs}></trinket-press>`;
+  const p = stage.firstElementChild;
+  await p.whenReady();
+  return p;
+}
+/** Count how many times the core steps per animation frame over a short window. */
+async function stepsPerFrame(p, ms = 400) {
+  const core = p._core, orig = core.step;
+  let steps = 0, rafs = 0, on = true;
+  core.step = (dt) => { steps++; return orig(dt); };
+  const count = () => { if (!on) return; rafs++; requestAnimationFrame(count); };
+  requestAnimationFrame(count);
+  await sleep(ms);
+  on = false;
+  core.step = orig;
+  return steps / Math.max(1, rafs);
+}
+
+const tests = {
+  async "detached mid-load resumes and grips when re-attached"() {
+    const p = await fresh();
+    const loaded = p.load({ lead: 30 });
+    p.remove();
+    await sleep(150);
+    stage.append(p);
+    const r = await within(loaded, 2000);
+    return [r !== "timeout" && p.state === "gripped", `state=${p.state}`];
+  },
+  async "moving the element (same task) does not freeze an animated crank"() {
+    const p = await fresh();
+    await p.load({ lead: 0 });
+    const c = p.crank(0.5, { speed: 1 });
+    await frames(3);
+    stage.append(document.createElement("div"));
+    stage.append(p);                                  // detach + attach synchronously
+    const r = await within(c, 2500);
+    return [r === true, `crank → ${r}`];
+  },
+  async "removed for good: the loop stops and crank() settles false"() {
+    const p = await fresh();
+    await p.load({ lead: 0 });
+    const c = p.crank(3, { speed: 1 });
+    await frames(3);
+    p.remove();
+    const r = await within(c, 1000);
+    const a0 = p._core.angle;
+    await sleep(300);
+    return [r === false && p._core.angle === a0, `crank → ${r}, moved after removal: ${p._core.angle !== a0}`];
+  },
+  async "no zombie loop when a handler detaches it during a frame"() {
+    const p = await fresh();
+    await p.load({ lead: 0 });
+    let done = false;
+    p.addEventListener("feed", () => { if (!done) { done = true; p.remove(); } });
+    p.crank(3, { speed: 1 });
+    await sleep(200);
+    const a0 = p._core.angle;
+    await sleep(300);
+    return [p._core.angle === a0 && !p.isConnected, `angle still changing: ${p._core.angle !== a0}`];
+  },
+  async "no doubled loop when a handler re-attaches it during a frame"() {
+    const p = await fresh();
+    await p.load({ lead: 0 });
+    let moved = false;
+    p.addEventListener("feed", () => { if (!moved) { moved = true; stage.append(p); } });
+    p.addEventListener("tick", () => p._wake());       // anything that wakes the loop from inside an event
+    p.crank(4, { speed: 0.6 });
+    await sleep(150);
+    const spf = await stepsPerFrame(p);
+    return [spf > 0.7 && spf < 1.3, `steps per frame ≈ ${spf.toFixed(2)} (1 = one loop)`];
+  },
+  async "load() twice: each promise gets its own sheet"() {
+    const p = await fresh();
+    const a = p.load({ id: "A", lead: 30 });
+    const b = p.load({ id: "B", lead: 30 });
+    const [ra, rb] = await Promise.all([within(a, 2000), within(b, 2000)]);
+    return [ra === null && rb?.id === "B", `A → ${ra === null ? "null" : ra?.id ?? ra}, B → ${rb?.id ?? rb}`];
+  },
+  async "load() then clear(): the promise settles (null)"() {
+    const p = await fresh();
+    const a = p.load({ lead: 40 });
+    p.clear();
+    const r = await within(a, 1500);
+    return [r === null, `→ ${r}`];
+  },
+  async "feedAll() then clear(): the promise settles (null)"() {
+    const p = await fresh();
+    await p.load({ lead: 0, length: 900 });
+    const f = p.feedAll({ speed: 0.4 });
+    await sleep(120);
+    p.clear();
+    const r = await within(f, 1500);
+    return [r === null, `→ ${r}`];
+  },
+  async "crank() superseded by another crank() settles false"() {
+    const p = await fresh();
+    const c1 = p.crank(2, { speed: 1 });
+    await frames(2);
+    const c2 = p.crank(0.2, { speed: 2 });
+    const [r1, r2] = await Promise.all([within(c1, 1500), within(c2, 2500)]);
+    return [r1 === false && r2 === true, `first → ${r1}, second → ${r2}`];
+  },
+  async "crank() interrupted by the user's hand settles false"() {
+    const p = await fresh();
+    const c = p.crank(3, { speed: 1 });
+    await frames(3);
+    p._core.grab(); p._drag = { id: 1, a: 0, t: 0 };    // what pointerdown on the wheel does
+    const r = await within(c, 1000);
+    p._core.release(); p._drag = null;
+    return [r === false, `→ ${r}`];
+  },
+  async "crank() interrupted by the keyboard settles false"() {
+    const p = await fresh();
+    const c = p.crank(3, { speed: 1 });
+    await frames(3);
+    p._stage.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+    const r = await within(c, 1000);
+    p._stage.dispatchEvent(new KeyboardEvent("keyup", { key: "ArrowRight", bubbles: true }));
+    return [r === false, `→ ${r}`];
+  },
+  async "locked while cranking: settles false"() {
+    const p = await fresh();
+    const c = p.crank(3, { speed: 1 });
+    await frames(3);
+    p.setAttribute("locked", "");
+    const r = await within(c, 1000);
+    return [r === false, `→ ${r}`];
+  },
+  async "feedAll() still completes normally"() {
+    const p = await fresh();
+    await p.load({ lead: 10, length: 200 });
+    const r = await within(p.feedAll({ speed: 3 }), 4000);
+    return [r && r !== "timeout" && p.state === "out", `state=${p.state}`];
+  },
+  async "load() before the element is ready resolves in order"() {
+    stage.innerHTML = "";
+    const p = document.createElement("trinket-press");
+    p.setAttribute("sfx", "off");
+    const a = p.load({ id: "A", lead: 10 });
+    const b = p.load({ id: "B", lead: 10 });
+    stage.append(p);
+    const [ra, rb] = await Promise.all([within(a, 2000), within(b, 2000)]);
+    return [ra === null && rb?.id === "B", `A → ${ra === null ? "null" : ra?.id ?? ra}, B → ${rb?.id ?? rb}`];
+  },
+  async "replacing the sheet during feedAll() stops its crank"() {
+    const p = await fresh();
+    await p.load({ lead: 0, length: 900 });
+    const f = p.feedAll({ speed: 0.5 });
+    await sleep(150);
+    const g = p.load({ lead: 0, length: 200 });
+    const r = await within(f, 1000);
+    await g;
+    await sleep(200);
+    return [r === null && !p._core.driving, `feedAll → ${r}, motor still running: ${p._core.driving}`];
+  },
+  async "refill after take does not run while detached"() {
+    const p = await fresh("refill");
+    await p.load({ lead: 0, length: 120 });
+    await p.feedAll({ speed: 4 });
+    const t = p.take();
+    p.remove();
+    await t;
+    await sleep(100);
+    return [p.state === "empty", `state=${p.state}`];
+  },
+};
+
+for (const [name, fn] of Object.entries(tests)) {
+  try {
+    const [ok, info] = await within(fn(), 6000).then((r) => (r === "timeout" ? [false, "test timed out"] : r));
+    report(name, ok, info);
+  } catch (e) {
+    report(name, false, String(e));
+  }
+}
+window.__done = true;
+</script>
+</body>
+</html>

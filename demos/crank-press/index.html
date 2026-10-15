@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#efe6d8">
+  <title>Crank Press · Trinket Lab</title>
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="../../components/crank-press/press-element.js"></script>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Trinket Lab · Crank Press</p>
+    <h1>Turn a plain sheet into something.</h1>
+    <p class="dek">Grab the wheel and turn it round. The brass roller grips the paper, presses its pattern in and hands the sheet out onto the table. One machine, many uses: embossed slips, tickets, little notes.</p>
+  </header>
+
+  <main>
+    <section class="desk">
+      <trinket-press id="press" roller="vine" label="ATELIER" sublabel="PAPER WORKS">
+        <style data-sheet-style>
+/* sheet content is host content: these rules style it inside the press and on the taken copies */
+.ticket { box-sizing: border-box; height: 100%; padding: 40px 26px 0; text-align: center; font-family: "Didot", "Bodoni 72", Georgia, serif; color: #3b2a1b; }
+.ticket p { margin: 0; }
+.t-small { font-size: 13px; letter-spacing: .24em; white-space: nowrap; }
+.t-title { font-size: 36px; line-height: 1.02; font-weight: 600; margin: 22px 0 18px !important; }
+.t-no { margin-top: 30px !important; font: 12px ui-monospace, Menlo, monospace; letter-spacing: .1em; }
+.note { box-sizing: border-box; height: 100%; padding: 30px 22px; font: 15px/1.7 "American Typewriter", "Courier Prime", "Songti SC", "STSong", Georgia, serif; color: #2f2722; }
+.note small { display: block; margin-top: 16px; font-size: 11px; letter-spacing: .2em; color: #8a5a3a; }
+
+        </style>
+        <template data-sheet="ticket" data-length="327" data-paper="cream">
+          <div class="ticket">
+            <p class="t-small">ADMIT ONE</p>
+            <p class="t-title">Moonlight<br>Cinema</p>
+            <p class="t-small">ROW F · SEAT <span data-seat>12</span></p>
+            <p class="t-no">No. <span data-no>000417</span></p>
+          </div>
+        </template>
+      </trinket-press>
+      <p class="hint" id="hint">Drag the wheel round · or focus it and hold →</p>
+    </section>
+
+    <aside class="panel">
+      <p class="state-line"><span class="dot"></span><span id="state">ready</span></p>
+      <div class="meter"><i id="meter"></i></div>
+
+      <p class="label">SCENE</p>
+      <div class="scenes" role="group" aria-label="Scene" id="scenes">
+        <button class="active" data-scene="slip"><b>Embossed slip</b><span>压花纸条</span></button>
+        <button data-scene="ticket"><b>Vintage ticket</b><span>复古票券</span></button>
+        <button data-scene="note"><b>Fortune note</b><span>小纸条</span></button>
+        <button data-scene="monogram"><b>Monogram card</b><span>字母徽章</span></button>
+      </div>
+
+      <div class="transport">
+        <button class="primary" id="auto">Crank it for me</button>
+        <button class="secondary-btn" id="new">New sheet</button>
+      </div>
+
+      <p class="label">ROLLER</p>
+      <div class="rollers" role="group" aria-label="Roller" id="rollers"></div>
+      <label class="letter" id="letter-row" hidden>Letter <input id="letter" maxlength="2" value="A"></label>
+
+      <p class="label">PAPER</p>
+      <div class="papers" role="group" aria-label="Paper" id="papers">
+        <button class="paper active" data-paper="cream" style="--c:#f2e8d4" title="Cream card"></button>
+        <button class="paper" data-paper="kraft" style="--c:#c7a37a" title="Kraft"></button>
+        <button class="paper" data-paper="watercolor" style="--c:#f6f2e8" title="Watercolour"></button>
+        <button class="paper" data-paper="blue" style="--c:#a9babe" title="Letter blue"></button>
+        <button class="paper" data-paper="pink" style="--c:#eab9ae" title="Coloured"></button>
+      </div>
+
+      <p class="label">FINISH</p>
+      <div class="swatches" role="group" aria-label="Finish" id="themes">
+        <button class="swatch active" data-theme="" style="--c:#35574a" aria-label="Vintage green"></button>
+        <button class="swatch" data-theme="cream" style="--c:#ebe3d2" aria-label="Cream"></button>
+        <button class="swatch" data-theme="coral" style="--c:#cf8f86" aria-label="Coral"></button>
+        <button class="swatch" data-theme="navy" style="--c:#2d3a52" aria-label="Navy"></button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="sound" checked> Sound</label>
+
+      <p class="label pages-label" id="tray-label" hidden>TAKEN</p>
+      <ul class="tray" id="tray"></ul>
+    </aside>
+  </main>
+
+  <footer>
+    <a href="../../">Trinket Lab</a>
+    <span>Crank Press V1</span>
+  </footer>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>

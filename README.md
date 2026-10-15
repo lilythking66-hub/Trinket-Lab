@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Typewriter](components/typewriter/README.md) · [Projector](components/projector/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Typewriter](components/typewriter/README.md) · [Projector](components/projector/README.md) · [Crank Press](components/crank-press/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -17,6 +17,7 @@ The goal is not to build one giant UI framework. Each trinket should stay small,
 - 💿 [**Turntable →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/) — import your own music, press it into a record, drop the needle.
 - ⌨️ [**Typewriter →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/typewriter/) — type on your own keyboard in any language; keys, typebars, carriage and bell answer.
 - 🎞️ [**Projector →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/projector/) — wind your photos onto a reel, run the filmstrip or project them in a dark room; MP4 too.
+- 🌀 [**Crank Press →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/crank-press/) — turn the wheel and let the brass roller press slips, tickets and notes.
 
 The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
@@ -92,7 +93,8 @@ Trinket-Lab/
 │   ├── gacha/
 │   ├── turntable/
 │   ├── typewriter/
-│   └── projector/
+│   ├── projector/
+│   └── crank-press/
 ├── skins/
 │   ├── neutral-camera-v1/
 │   └── porcelain-printer-v1/
@@ -104,7 +106,8 @@ Trinket-Lab/
 │   ├── gacha/
 │   ├── turntable/
 │   ├── typewriter/
-│   └── projector/
+│   ├── projector/
+│   └── crank-press/
 └── docs/
     └── ARCHITECTURE.md
 ~~~
@@ -256,6 +259,27 @@ Text is printed as grapheme clusters with East-Asian wide characters taking two 
 ~~~
 
 ### ▶ [Open the live Projector demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/projector/)
+
+## Crank Press
+
+[Crank Press](components/crank-press/README.md) is a build-free `<trinket-press>` Web Component: a 2.5D hand-crank roller press with a brass pattern roller, a spoked flywheel, a ratchet pawl and gears that all follow one crank shaft. Drag the wheel round (mouse or touch) or hold an arrow key; the sheet is gripped, fed exactly with the roller surface and handed out onto the table, where a tap takes it.
+
+The roller and the paper share one height map, so the impression on the sheet is what the roller actually pressed: eight rollers (floral vine, kitten paws, stars & moon, bows, vintage border, botanical, monogram, plain) as emboss, deboss or ink, on cream, kraft, watercolour, blue or pink paper, plus custom patterns. Sheet content is host HTML, which makes the same base a ticket machine, a note printer or an embosser.
+
+[![Crank press demo](docs/demo-images/crank-press-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/crank-press/)
+
+~~~html
+<script type="module" src="components/crank-press/press-element.js"></script>
+<trinket-press roller="frame" impression="ink"></trinket-press>
+<script type="module">
+  const press = document.querySelector("trinket-press");
+  await press.load({ length: press.turnLength, content: "<p>ADMIT ONE</p>" }); // one turn = one ticket
+  await press.feedAll();
+  const { node } = await press.take();   // a standalone copy for your page
+</script>
+~~~
+
+### ▶ [Open the live Crank Press demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/crank-press/)
 
 ## License
 
