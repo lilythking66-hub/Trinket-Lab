@@ -2,7 +2,7 @@
 
 **A collection of playful, reusable interactive objects for the web.**
 
-[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
+[**Live demo →**](https://lilythking66-hub.github.io/Trinket-Lab/) · [Instant Photo](components/instant-photo/README.md) · [Instant Camera](components/instant-camera/README.md) · [Printer](components/printer/README.md) · [Bookshelf](components/bookshelf/README.md) · [Gacha](components/gacha/README.md) · [Turntable](components/turntable/README.md) · [Typewriter](components/typewriter/README.md) · [Skin contract](docs/SKIN_CONTRACT.md)
 
 Trinket Lab is a home for small digital objects that feel like things: cameras that eject photos, printers that feed paper, books that open and turn, gacha machines, gift boxes, radios, and other tactile interactions.
 
@@ -15,6 +15,7 @@ The goal is not to build one giant UI framework. Each trinket should stay small,
 - 📚 [**Bookshelf →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/bookshelf/) — take out, reorder, open, read, and return books.
 - 🎰 [**Gacha →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/gacha/) — turn the knob, take the capsule, pull it apart; swap the prizes freely.
 - 💿 [**Turntable →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/) — import your own music, press it into a record, drop the needle.
+- ⌨️ [**Typewriter →**](https://lilythking66-hub.github.io/Trinket-Lab/demos/typewriter/) — type on your own keyboard in any language; keys, typebars, carriage and bell answer.
 
 The public repository shows working components and their integration contracts. Internal visual boards, source mood sheets, and master-design breakdowns are intentionally kept out of the public repo.
 
@@ -88,7 +89,8 @@ Trinket-Lab/
 │   ├── printer/
 │   ├── bookshelf/
 │   ├── gacha/
-│   └── turntable/
+│   ├── turntable/
+│   └── typewriter/
 ├── skins/
 │   ├── neutral-camera-v1/
 │   └── porcelain-printer-v1/
@@ -98,7 +100,8 @@ Trinket-Lab/
 │   ├── instant-photo-family/
 │   ├── printer/
 │   ├── gacha/
-│   └── turntable/
+│   ├── turntable/
+│   └── typewriter/
 └── docs/
     └── ARCHITECTURE.md
 ~~~
@@ -211,6 +214,26 @@ Local music becomes records on the device: tags and cover art are read from MP3,
 ~~~
 
 ### ▶ [Open the live Turntable demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/turntable/)
+
+## Typewriter
+
+[Typewriter](components/typewriter/README.md) is a build-free `<trinket-typewriter>` Web Component: a 2.5D 1930s-style typewriter. The key at the same physical position as the one you press goes down (`KeyboardEvent.code`, so any keyboard layout or input method works), a typebar swings up, the letter lands with a slightly uneven impression and the carriage escapes one cell. Carriage return by Enter, the lever or automatically at the margin, a bell before the end, correction-tape or overstrike backspace, four finishes and five paper styles.
+
+Text is printed as grapheme clusters with East-Asian wide characters taking two cells, so Chinese, Japanese, Korean, accented Latin and emoji all type; IME composition shows as a ghost at the print point. The page comes back as plain text when the sheet is ejected.
+
+[![Typewriter demo](docs/demo-images/typewriter-demo.jpg)](https://lilythking66-hub.github.io/Trinket-Lab/demos/typewriter/)
+
+~~~html
+<script type="module" src="components/typewriter/typewriter-element.js"></script>
+<trinket-typewriter paper="lined" theme="green"></trinket-typewriter>
+<script type="module">
+  const tw = document.querySelector("trinket-typewriter");
+  await tw.type("Dear friend,\n见字如面。");   // animated; or tw.print() instantly
+  const page = await tw.eject();             // { text, lines, glyphs }
+</script>
+~~~
+
+### ▶ [Open the live Typewriter demo](https://lilythking66-hub.github.io/Trinket-Lab/demos/typewriter/)
 
 ## License
 

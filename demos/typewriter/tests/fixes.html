@@ -1,0 +1,108 @@
+<!doctype html><meta charset="utf-8"><body><div id="a"></div><div id="b"></div>
+<script type="module">
+import "../../../components/typewriter/typewriter-element.js";
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const idle = async (tw) => { for (let i = 0; i < 400 && tw.busy; i++) await wait(25); };
+const results = [];
+const ok = (name, cond, info = "") => results.push(`${cond ? "PASS" : "FAIL"}: ${name}${cond ? "" : "  " + info}`);
+const make = (attrs) => { const el = document.createElement("trinket-typewriter"); for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v); el.setAttribute("sfx", "off"); document.getElementById("a").append(el); return el; };
+
+// ---- P1 page-end="new" keeps everything that was queued
+{
+  const tw = make({ columns: 8, rows: 2, "page-end": "new" });
+  await tw.whenReady();
+  const pages = []; tw.addEventListener("eject", (e) => pages.push(e.detail.page.text));
+  const src = "abcdefghijklmnopqrstuvwxyz0123456789";        // 36 chars = 2¼ sheets
+  for (const g of src) tw._enqueueGrapheme(g, "paste");        // like a paste / fast typist
+  await idle(tw);
+  const all = [...pages, tw.text].join("").replace(/\n/g, "");
+  ok("page-end=new: queued text survives sheet changes (animated)", all === src, JSON.stringify({ pages, now: tw.text }));
+  tw.remove();
+}
+{
+  const tw = make({ columns: 8, rows: 2, "page-end": "new" });
+  await tw.whenReady();
+  const pages = []; tw.addEventListener("eject", (e) => pages.push(e.detail.page.text));
+  const src = "abcdefghijklmnopqrstuvwxyz0123456789";
+  tw.print(src);
+  const all = [...pages, tw.text].join("").replace(/\n/g, "");
+  ok("page-end=new: print() rolls onto new sheets", all === src && pages.length === 2, JSON.stringify({ pages, now: tw.text }));
+  tw.print("\n\n\nZ");
+  ok("page-end=new: print() newline at the bottom starts a new sheet", tw.text.endsWith("Z"), JSON.stringify(tw.text));
+  tw.remove();
+}
+{
+  const tw = make({ columns: 8, rows: 1 });
+  await tw.whenReady();
+  let dropped = null; tw.addEventListener("pagefull", (e) => { dropped ??= e.detail.dropped; });
+  for (const g of "abcdefghXYZ") tw._enqueueGrapheme(g, "paste");
+  const ej = tw.eject();
+  const page = await Promise.race([ej, wait(4000).then(() => "TIMEOUT")]);
+  ok("page-end stop: reports dropped text", dropped === "XYZ", JSON.stringify(dropped));
+  ok("page-end stop: an awaited eject() still resolves", page && page.text === "abcdefgh", JSON.stringify(page));
+  tw.remove();
+}
+
+// ---- P1 nothing keeps running after the element leaves the page
+{
+  const tw = make({ columns: 30, rows: 12 });
+  await tw.whenReady();
+  const p = tw.type("The quick brown fox jumps over the lazy dog, again and again and again.", { cps: 30 });
+  await wait(400);
+  tw.remove();
+  const t0 = performance.now();
+  const r = await Promise.race([p, wait(1500).then(() => "TIMEOUT")]);
+  const settled = performance.now() - t0;
+  const textAtRemove = tw.text;
+  let changes = 0; tw.addEventListener("change", () => changes++); tw.addEventListener("type", () => changes++);
+  await wait(800);
+  ok("detached: type() settles promptly", r !== "TIMEOUT" && settled < 200, `${r} ${settled.toFixed(0)}ms`);
+  ok("detached: no more strikes or changes", changes === 0 && tw.text === textAtRemove && !tw.busy, `changes=${changes} busy=${tw.busy}`);
+  ok("detached: no frame loop", tw._raf === 0);
+  // promises waiting when it left
+  document.getElementById("a").append(tw);
+  for (const g of "hello") tw._enqueueGrapheme(g, "paste");
+  const ej = tw.eject();
+  tw.remove();
+  const page = await Promise.race([ej, wait(1500).then(() => "TIMEOUT")]);
+  ok("detached: a pending eject() settles", page !== "TIMEOUT", String(page));
+  // re-attach works again
+  document.getElementById("a").append(tw);
+  await tw.newSheet();
+  await tw.type("ok", { cps: 40 });
+  ok("re-attached: types again", tw.text === "ok", JSON.stringify(tw.text));
+  tw.remove();
+}
+{
+  const tw = make({ columns: 30, rows: 12 });
+  await tw.whenReady();
+  const p = tw.type("moving keeps typing", { cps: 40 });
+  await wait(150);
+  document.getElementById("b").append(tw);           // move = disconnect + connect
+  await Promise.race([p, wait(3000)]);
+  ok("moved: typing continues to the end", tw.text === "moving keeps typing", JSON.stringify(tw.text));
+  tw.remove();
+}
+
+// ---- P2 full-width space is one keystroke, two cells
+{
+  const tw = make({ columns: 8, rows: 4 });
+  await tw.whenReady();
+  tw.print("ab　cd");
+  ok("「　」 print(): two cells", tw.column === 6, `col=${tw.column}`);
+  ok("「　」 text round-trips", tw.text === "ab　cd", JSON.stringify(tw.text));
+  await tw.newSheet();
+  await tw.type("ab　", { cps: 40 });
+  ok("「　」 typed: two cells", tw.column === 4, `col=${tw.column}`);
+  tw.backspace(); await idle(tw);
+  ok("「　」 one backspace removes both cells", tw.column === 2 && tw.text === "ab", `col=${tw.column} ${JSON.stringify(tw.text)}`);
+  await tw.newSheet();
+  await tw.type("abcdefg　x", { cps: 40 });
+  ok("「　」 never squeezes into the last cell", tw.line === 1 && tw.text === "abcdefg\nx", `line=${tw.line} ${JSON.stringify(tw.text)}`);
+  await tw.newSheet();
+  tw.print("abcdefg　x");
+  ok("「　」 print(): same at the margin", tw.text === "abcdefg\nx", JSON.stringify(tw.text));
+  tw.remove();
+}
+window.__results = results;
+</script>

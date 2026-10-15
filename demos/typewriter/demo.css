@@ -1,0 +1,96 @@
+:root {
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+  color: #3a322a;
+  background: #efe6d8;
+  --muted: #8a8073;
+  --line: #ddd1bf;
+  --ink: #3a322a;
+  --accent: #9a6a2c;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(60% 50% at 30% 46%, rgba(255, 236, 200, .8), transparent 70%),
+    linear-gradient(180deg, #f2eadf, #e9dece);
+}
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+header { max-width: 1220px; margin: 0 auto; padding: 46px 48px 0; }
+.eyebrow, .label { margin: 0 0 12px; color: var(--muted); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(26px, 4vw, 48px); font-weight: 520; letter-spacing: -.04em; }
+.dek { max-width: 640px; margin: 13px 0 0; color: var(--muted); line-height: 1.7; }
+
+main {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 48px 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 44px;
+  align-items: start;
+}
+.desk { min-width: 0; display: grid; justify-items: center; padding-top: 6px; }
+trinket-typewriter { --trinket-typewriter-width: 720px; }
+.hint { margin: 0; min-height: 1.6em; color: var(--muted); font-size: 12px; text-align: center; }
+
+.panel { padding-top: 46px; }
+.state-line { display: flex; gap: 8px; align-items: center; margin: 0 0 24px; font: 11px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #b9ad9c; transition: background .2s, box-shadow .2s; }
+body[data-focused] .dot { background: #c0603a; box-shadow: 0 0 0 4px rgba(192, 96, 58, .15); }
+
+.samples { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.samples button {
+  padding: 9px 10px; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.5); font-size: 13px; text-align: left;
+}
+.samples button:hover { background: rgba(255,255,255,.8); }
+.transport { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-bottom: 30px; }
+.primary { border: 1px solid #2c2620; background: #2f2924; color: #f6eedf; border-radius: 6px; padding: 12px 18px; letter-spacing: .04em; }
+.secondary-btn { padding: 12px 16px; border: 1px solid var(--line); border-radius: 6px; background: rgba(255,255,255,.5); font-size: 13px; }
+
+.swatches { display: flex; gap: 12px; margin-bottom: 26px; }
+.swatch { width: 26px; height: 26px; padding: 0; border: 2px solid #fff; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 1px var(--line); }
+.swatch.active { box-shadow: 0 0 0 2px var(--ink); }
+.choices { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
+.choice { border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--muted); padding: 4px 0 7px; font-size: 12px; }
+.choice.active { color: var(--ink); border-color: var(--accent); }
+.toggle { display: flex; align-items: center; gap: 10px; margin: 4px 0 26px; font-size: 12px; }
+.toggle input { accent-color: var(--accent); }
+
+.pages { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.page {
+  position: relative;
+  margin: 0;
+  padding: 14px 16px;
+  background: #f6efe0;
+  box-shadow: 0 6px 16px rgba(60, 40, 20, .14), 0 0 0 1px rgba(60, 40, 20, .06);
+  font: 12px/1.5 "American Typewriter", "Courier Prime", "Courier New", "Songti SC", serif;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 190px;
+  overflow: auto;
+  transform: rotate(var(--tilt, -.6deg));
+  animation: land .5s cubic-bezier(.2, 1.2, .4, 1);
+}
+.page button { position: absolute; top: 6px; right: 6px; border: 0; background: none; color: var(--muted); font: 11px Inter, sans-serif; }
+@keyframes land { from { transform: translateY(-30px) rotate(-4deg); opacity: 0; } }
+
+footer {
+  max-width: 1220px; margin: 0 auto; padding: 20px 48px 32px; border-top: 1px solid var(--line);
+  display: flex; justify-content: space-between; font-size: 10px; letter-spacing: .12em; color: var(--muted);
+}
+footer a { color: inherit; }
+
+@media (max-width: 900px) {
+  header { padding: 28px 18px 0; }
+  main { padding: 0 18px 24px; display: flex; flex-direction: column; gap: 0; }
+  .desk { width: 100%; }
+  trinket-typewriter { --trinket-typewriter-width: 100%; }
+  .panel { width: 100%; padding: 14px 0 24px; }
+  .samples { grid-template-columns: repeat(4, 1fr); }
+  footer { margin: 0 18px; padding: 18px 0 28px; }
+}
+@media (max-width: 460px) {
+  .samples { grid-template-columns: 1fr 1fr; }
+}

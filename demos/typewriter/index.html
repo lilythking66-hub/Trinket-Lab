@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#efe6d8">
+  <title>Typewriter · Trinket Lab</title>
+  <link rel="stylesheet" href="./demo.css">
+  <script type="module" src="../../components/typewriter/typewriter-element.js"></script>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Trinket Lab · Typewriter</p>
+    <h1>Good things take time.</h1>
+    <p class="dek">Click the machine and type on your own keyboard: the matching key goes down, a typebar swings up, and the letter lands on the paper. Any language your keyboard or input method can write prints too.</p>
+  </header>
+
+  <main>
+    <section class="desk">
+      <trinket-typewriter id="tw" label="Trinket" paper="plain"></trinket-typewriter>
+      <p class="hint" id="hint">Click the paper to start typing · Enter or the lever returns the carriage</p>
+    </section>
+
+    <aside class="panel">
+      <p class="state-line"><span class="dot"></span><span id="pos">line 1 · col 1</span></p>
+
+      <p class="label">TRY</p>
+      <div class="samples" role="group" aria-label="Type a sample">
+        <button data-sample="en">English</button>
+        <button data-sample="zh">中文</button>
+        <button data-sample="ja">日本語</button>
+        <button data-sample="mix">Mixed ✉️</button>
+      </div>
+
+      <div class="transport">
+        <button class="primary" id="take">Take the page</button>
+        <button class="secondary-btn" id="new">New sheet</button>
+      </div>
+
+      <p class="label">FINISH</p>
+      <div class="swatches" role="group" aria-label="Finish" id="themes">
+        <button class="swatch active" data-theme="" style="--c:#15120f" aria-label="Classic black"></button>
+        <button class="swatch" data-theme="green" style="--c:#1d3b2d" aria-label="Ink green"></button>
+        <button class="swatch" data-theme="burgundy" style="--c:#5b1a20" aria-label="Burgundy"></button>
+        <button class="swatch" data-theme="cream" style="--c:#e8dcc2" aria-label="Cream"></button>
+      </div>
+
+      <p class="label">PAPER</p>
+      <div class="choices" role="group" aria-label="Paper" id="paper">
+        <button class="choice active" data-paper="plain">Letter</button>
+        <button class="choice" data-paper="lined">Lined</button>
+        <button class="choice" data-paper="grid">Grid</button>
+        <button class="choice" data-paper="kraft">Kraft</button>
+        <button class="choice" data-paper="airmail">Airmail</button>
+      </div>
+
+      <p class="label">RIBBON</p>
+      <div class="choices" role="group" aria-label="Ink" id="ink">
+        <button class="choice active" data-ink="">Black</button>
+        <button class="choice" data-ink="red">Red</button>
+        <button class="choice" data-ink="blue">Blue</button>
+      </div>
+
+      <p class="label">MECHANISM</p>
+      <div class="choices" role="group" aria-label="At the margin" id="lineend">
+        <button class="choice active" data-v="wrap">Auto return</button>
+        <button class="choice" data-v="lock">Carriage locks</button>
+      </div>
+      <div class="choices" role="group" aria-label="Backspace" id="backspace">
+        <button class="choice active" data-v="erase">Correction tape</button>
+        <button class="choice" data-v="move">Overstrike</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="sound" checked> Sound</label>
+
+      <p class="label pages-label" id="pages-label" hidden>PAGES</p>
+      <ul class="pages" id="pages"></ul>
+    </aside>
+  </main>
+
+  <footer>
+    <a href="../../">Trinket Lab</a>
+    <span>Typewriter V1</span>
+  </footer>
+
+  <script type="module" src="./demo.js"></script>
+</body>
+</html>
